@@ -27,3 +27,10 @@ Compression Algorithm Example:
 -Compression: 5G6Y3R, size: 6B
 -This is known as run length compression
 -This type of compression doesnt work for everything
+
+Raster vs Vector
+-Raster image is represented as a grid of pixels
+-Vector image format is a list of drawing instructions
+-Vector format ex: svg
+
+
