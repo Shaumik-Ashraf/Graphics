@@ -33,4 +33,29 @@ Raster vs Vector
 -Vector image format is a list of drawing instructions
 -Vector format ex: svg
 
+## 2/4/16
+####NetPBM
+-a family of image file formats
+-extension: .ppm
+-losseless raster format
+-format:
+
+P3
+
+XRES YRES MAX_COLOR_VALUE
+
+R G B R G B ...
+
+[0,0] [0,1] ...
+
+R G B R G B ...
+
+[1,1] [1,1] ...
+
+
+Commands:
+-display <file>.ppm
+-convert <file>.ppm <file>.png
+
+DO NOT ADD PPM TO GITHUB
 
