@@ -5,6 +5,8 @@
 #include<unistd.h>
 #include<fcntl.h>
 
+void mkpic0(int fd, char* buffer, int bufmax);
+
 int main(int argc, char* argv[]) {
 
   int i, j, fd;
@@ -26,17 +28,41 @@ int main(int argc, char* argv[]) {
   write(fd, buffer, strlen(buffer));
   memset(buffer, '\0', 256);
   
-  for(i=0; i<500; i++) {
-    for(j=0; j<500; j++) {
-      strcpy(buffer, "200 0 200 ");
-      write(fd, buffer, strlen(buffer));
-      memset(buffer, '\0', 256);
-    }
-    write(fd, "\n", 2);
-  }
-  
+  mkpic1(fd, buffer, 256);
   
   close(fd);
   
   return(0);
 }
+
+void mkpic0(int fd, char* buffer, int bufmax) {
+
+	int i, j;
+
+	for(i=0; i<500; i++) {
+	    for(j=0; j<500; j++) {
+	      strcpy(buffer, "200 0 200 ");
+	      write(fd, buffer, strlen(buffer));
+	      memset(buffer, '\0', 256);
+	    }
+	    write(fd, "\n", 2);
+	  }
+
+}
+
+void mkpic1(int fd, char* buffer, int bufmax) {
+
+	int i, j;
+
+	for(i=0; i<500; i++) {
+	    for(j=0; j<500; j++) {
+	      strcpy(buffer, "255 105 180 ");
+	      write(fd, buffer, strlen(buffer));
+	      memset(buffer, '\0', 256);
+	    }
+	    write(fd, "\n", 2);
+	}
+
+}
+
+
