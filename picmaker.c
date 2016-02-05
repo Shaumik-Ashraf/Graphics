@@ -9,11 +9,13 @@
 #define SQR(x) ((x)*(x))
 #define SQRSUM(x, y) (SQR(x)+SQR(y))
 
+double distance(int x1, int y1, int x2, int y2);
 void mkpic0(int fd, char* buffer, int bufmax);
 void mkpic1(int fd, char* buffer, int bufmax);
 void mkpic2(int fd, char* buffer, int bufmax);
 void mkpic3(int fd, char* buffer, int bufmax);
 void mkpic4(int fd, char* buffer, int bufmax);
+void mkpic5(int fd, char* buffer, int bufmax);
 void mkpic5(int fd, char* buffer, int bufmax);
 
 int main(int argc, char* argv[]) {
@@ -42,6 +44,12 @@ int main(int argc, char* argv[]) {
   close(fd);
   
   return(0);
+}
+
+double distance(int x1, int y1, int x2, int y2) {
+	
+	return( sqrt((double)( SQR(x2-x1) + SQR(y2-y1) )) );
+	
 }
 
 void mkpic0(int fd, char* buffer, int bufmax) {
@@ -159,3 +167,32 @@ void mkpic5(int fd, char* buffer, int bufmax) {
 	}
 	
 }
+
+void mkpic6(int fd, char* buffer, int bufmax) {
+	
+	int i, j, r=0, g=0, b=0;
+	
+	for(i=0; i<500; i++) {
+		for(j=0; j<500; j++) {
+			
+			if( (int)distance(i, j, 500, 0) < 50 ) {
+				r = (int)((float)i/500 * 255);
+			}
+			else {
+				r = 0;
+			}
+		
+			g = (int)(((SQRSUM(200, 200) - (int)sqrt( (double)SQRSUM(i, j) )) / (double)SQRSUM(200, 200)) * 255);
+		
+			//if(  )
+			b = (int)((float)j/500 * 255);
+			
+			sprintf(buffer, "%i %i %i ", r, g, b );
+			write(fd, buffer, strlen(buffer));
+			memset(buffer, '\0', bufmax);
+	    }
+	    write(fd, "\n", 2);
+	}
+	
+}
+
