@@ -143,7 +143,12 @@ void mkpic5(int fd, char* buffer, int bufmax) {
 		for(j=0; j<500; j++) {
 			
 			r = (int)((float)i/500 * 255);
-			g = (int)(((SQRSUM(500, 500) - (int)sqrt( (double)SQRSUM(i, j) )) / (double)SQRSUM(500, 500)) * 255);
+			if( i<200 && j<200 ) {
+				g = (int)(((SQRSUM(200, 200) - (int)sqrt( (double)SQRSUM(i, j) )) / (double)SQRSUM(200, 200)) * 255);
+			}
+			else {
+				g=0;
+			}
 			b = (int)((float)j/500 * 255);
 			
 			sprintf(buffer, "%i %i %i ", r, g, b );
