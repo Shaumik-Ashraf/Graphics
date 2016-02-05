@@ -1,5 +1,5 @@
 picmaker: picmaker.c
-	gcc -o picmaker picmaker.c -lm
+	gcc -w -o picmaker picmaker.c -lm
 
 push: picmaker
 	./picmaker SA_image.ppm
