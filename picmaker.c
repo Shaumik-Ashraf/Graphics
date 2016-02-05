@@ -2,10 +2,13 @@
 //make pictures in pbm
 
 #include<stdio.h>
+#include<math.h>
 #include<unistd.h>
 #include<fcntl.h>
 
 void mkpic0(int fd, char* buffer, int bufmax);
+void mkpic1(int fd, char* buffer, int bufmax);
+void mkpic2(int fd, char* buffer, int bufmax);
 
 int main(int argc, char* argv[]) {
 
@@ -28,7 +31,7 @@ int main(int argc, char* argv[]) {
   write(fd, buffer, strlen(buffer));
   memset(buffer, '\0', 256);
   
-  mkpic1(fd, buffer, 256);
+  mkpic2(fd, buffer, 256);
   
   close(fd);
   
@@ -58,11 +61,24 @@ void mkpic1(int fd, char* buffer, int bufmax) {
 	    for(j=0; j<500; j++) {
 	      strcpy(buffer, "255 105 180 ");
 	      write(fd, buffer, strlen(buffer));
-	      memset(buffer, '\0', 256);
+	      memset(buffer, '\0', bufmax);
 	    }
 	    write(fd, "\n", 2);
 	}
 
 }
 
-
+void mkpic2(int fd, char* buffer, int bufmax) {
+	
+	int i, j, b;
+	
+	for(i=0; i<500; i++) {
+		for(j=0; j<500; j++) {
+			sprintf(buffer, "%i %i %i ", 0, 0, (int)(sin((double)i)*255) );
+			write(fd, buffer, strlen(buffer));
+			memset(buffer, '\0', bufmax);
+	    }
+	    write(fd, "\n", 2);
+	}
+	
+}
