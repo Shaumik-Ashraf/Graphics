@@ -110,15 +110,15 @@ void mkpic4(int fd, char* buffer, int bufmax) {
 	for(i=0; i<500; i++) {
 		for(j=0; j<500; j++) {
 			
-			if( (SQRSUM(i, j)) < sqrt(150) ) {
+			if( (SQRSUM(i, j)) < 300 ) {
 				g = 255;
 			}
 			
-			if( SQRSUM(i, (j-500)) < sqrt(150) ) {
+			if( SQRSUM(i, (j-500)) < 200 ) {
 				r = 255;
 			}
 			
-			if( SQRSUM((i-500), j) < sqrt(150) ) {
+			if( SQRSUM((i-500), j) < 150 ) {
 				b = 255;
 			}
 			
