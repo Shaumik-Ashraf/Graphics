@@ -177,7 +177,7 @@ void mkpic6(int fd, char* buffer, int bufmax) {
 			
 			r = (int)((float)i/500 * 255);
 			
-			if( (int)distance(i, j, 0, 0) < 100 || (int)distance(i, j, 500, 0) < 100 || (int)distance(i, j, 0, 500) < 150 ) {
+			if( (int)distance(i, j, 0, 0) < 175 || (int)distance(i, j, 500, 0) < 150 || (int)distance(i, j, 0, 500) < 200 ) {
 				g = (int)(((SQRSUM(200, 200) - (int)sqrt( (double)SQRSUM(i, j) )) / (double)SQRSUM(200, 200)) * 255);
 			}
 			else {
