@@ -2,7 +2,7 @@ picmaker: picmaker.c
 	gcc -o picmaker picmaker.c -lm
 
 push: picmaker
-	picmaker SA_image.ppm
+	./picmaker SA_image.ppm
 	convert SA_image.ppm SA_image.png
 	rm *.ppm
 	rm picmaker
