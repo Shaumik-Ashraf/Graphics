@@ -111,15 +111,15 @@ void mkpic4(int fd, char* buffer, int bufmax) {
 		for(j=0; j<500; j++) {
 			
 			if( (SQRSUM(i, j)) < sqrt(150) ) {
-				g = (int)(sin(SQRSUM(i, j) )*255);
+				g = 255;
 			}
 			
 			if( SQRSUM(i, (j-500)) < sqrt(150) ) {
-				r = (int)(sin(SQRSUM(i, j) )*255);
+				r = 255;
 			}
 			
 			if( SQRSUM((i-500), j) < sqrt(150) ) {
-				b = (int)(sin(SQRSUM(i, j) )*255);
+				b = 255;
 			}
 			
 			sprintf(buffer, "%i %i %i ", r, g, b );
