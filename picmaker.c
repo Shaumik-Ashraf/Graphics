@@ -14,6 +14,7 @@ void mkpic1(int fd, char* buffer, int bufmax);
 void mkpic2(int fd, char* buffer, int bufmax);
 void mkpic3(int fd, char* buffer, int bufmax);
 void mkpic4(int fd, char* buffer, int bufmax);
+void mkpic5(int fd, char* buffer, int bufmax);
 
 int main(int argc, char* argv[]) {
 
@@ -36,7 +37,7 @@ int main(int argc, char* argv[]) {
   write(fd, buffer, strlen(buffer));
   memset(buffer, '\0', 256);
   
-  mkpic4(fd, buffer, 256);
+  mkpic5(fd, buffer, 256);
   
   close(fd);
   
@@ -111,6 +112,7 @@ void mkpic4(int fd, char* buffer, int bufmax) {
 		for(j=0; j<500; j++) {
 			
 			if( (SQRSUM(i, j)) < SQR(1) ) {
+				;
 				r = 255;
 			}
 			
@@ -123,6 +125,26 @@ void mkpic4(int fd, char* buffer, int bufmax) {
 				b = 255;
 			}
 			*/
+			
+			sprintf(buffer, "%i %i %i ", r, g, b );
+			write(fd, buffer, strlen(buffer));
+			memset(buffer, '\0', bufmax);
+	    }
+	    write(fd, "\n", 2);
+	}
+	
+}
+
+void mkpic5(int fd, char* buffer, int bufmax) {
+	
+	int i, j, r=0, g=0, b=0;
+	
+	for(i=0; i<500; i++) {
+		for(j=0; j<500; j++) {
+			
+			r = i%255;
+			//g;
+			b = j%255;
 			
 			sprintf(buffer, "%i %i %i ", r, g, b );
 			write(fd, buffer, strlen(buffer));
