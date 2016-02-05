@@ -114,6 +114,7 @@ void mkpic4(int fd, char* buffer, int bufmax) {
 				g = 255;
 			}
 			
+			/*
 			if( SQRSUM(i, (j-500)) < 200 ) {
 				r = 255;
 			}
@@ -121,6 +122,7 @@ void mkpic4(int fd, char* buffer, int bufmax) {
 			if( SQRSUM((i-500), j) < 150 ) {
 				b = 255;
 			}
+			*/
 			
 			sprintf(buffer, "%i %i %i ", r, g, b );
 			write(fd, buffer, strlen(buffer));
