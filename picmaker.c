@@ -90,7 +90,7 @@ void mkpic3(int fd, char* buffer, int bufmax) {
 	
 	for(i=0; i<500; i++) {
 		for(j=0; j<500; j++) {
-			sprintf(buffer, "%i %i %i ", (int)(cos((double)(j*0.5))*255), 0, (int)(sin((double)(i*0.5))*255) );
+			sprintf(buffer, "%i %i %i ", (int)(cos((double)(j*0.07))*255), 0, (int)(sin((double)(i*0.7))*255) );
 			write(fd, buffer, strlen(buffer));
 			memset(buffer, '\0', bufmax);
 	    }
