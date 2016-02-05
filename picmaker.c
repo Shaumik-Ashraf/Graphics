@@ -175,16 +175,15 @@ void mkpic6(int fd, char* buffer, int bufmax) {
 	for(i=0; i<500; i++) {
 		for(j=0; j<500; j++) {
 			
-			if( (int)distance(i, j, 500, 0) < 50 ) {
-				r = (int)((float)i/500 * 255);
+			r = (int)((float)i/500 * 255);
+			
+			if( (int)distance(i, j, 0, 0) < 100 || (int)distance(i, j, 500, 0) < 100 || (int)distance(i, j, 0, 500) < 150 ) {
+				g = (int)(((SQRSUM(200, 200) - (int)sqrt( (double)SQRSUM(i, j) )) / (double)SQRSUM(200, 200)) * 255);
 			}
 			else {
-				r = 0;
+				g = 0;
 			}
-		
-			g = (int)(((SQRSUM(200, 200) - (int)sqrt( (double)SQRSUM(i, j) )) / (double)SQRSUM(200, 200)) * 255);
-		
-			//if(  )
+			
 			b = (int)((float)j/500 * 255);
 			
 			sprintf(buffer, "%i %i %i ", r, g, b );
