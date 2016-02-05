@@ -39,7 +39,7 @@ int main(int argc, char* argv[]) {
   write(fd, buffer, strlen(buffer));
   memset(buffer, '\0', 256);
   
-  mkpic5(fd, buffer, 256);
+  mkpic6(fd, buffer, 256);
   
   close(fd);
   
