@@ -205,11 +205,11 @@ void mkpic7(int fd, char* buffer, int bufmax) {
 			
 			r = (int)((float)i/500 * 255);
 			
-			if( (int)distance(i, j, 0, 0) < 175 ) {
-				g = (int)(((175 - distance(i, j, 0, 0))/175)*255);
+			if( (int)distance(i, j, 0, 0) < 200 ) {
+				g = (int)(((200 - distance(i, j, 0, 0))/200)*255);
 			}
-			else if( (int)distance(i, j, 500, 0) < 150 ) {
-				g = (int)(((150 - distance(i, j, 500, 0))/150)*255);
+			else if( (int)distance(i, j, 500, 0) < 175 ) {
+				g = (int)(((175 - distance(i, j, 500, 0))/175)*255);
 			}
 			else if( (int)distance(i, j, 0, 500) < 200 ) {
 				g = (int)(((200 - distance(i, j, 0, 500))/200)*255);
