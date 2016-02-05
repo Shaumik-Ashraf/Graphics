@@ -110,7 +110,7 @@ void mkpic4(int fd, char* buffer, int bufmax) {
 	for(i=0; i<500; i++) {
 		for(j=0; j<500; j++) {
 			
-			if( (SQRSUM(i, j)) < 100 ) {
+			if( (SQRSUM(i, j)) < SQR(100) ) {
 				r = 255;
 			}
 			
