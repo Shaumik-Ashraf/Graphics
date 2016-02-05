@@ -16,7 +16,8 @@ void mkpic2(int fd, char* buffer, int bufmax);
 void mkpic3(int fd, char* buffer, int bufmax);
 void mkpic4(int fd, char* buffer, int bufmax);
 void mkpic5(int fd, char* buffer, int bufmax);
-void mkpic5(int fd, char* buffer, int bufmax);
+void mkpic6(int fd, char* buffer, int bufmax);
+void mkpic7(int fd, char* buffer, int bufmax);
 
 int main(int argc, char* argv[]) {
 
@@ -195,3 +196,35 @@ void mkpic6(int fd, char* buffer, int bufmax) {
 	
 }
 
+void mkpic7(int fd, char* buffer, int bufmax) {
+	
+	int i, j, r=0, g=0, b=0;
+	
+	for(i=0; i<500; i++) {
+		for(j=0; j<500; j++) {
+			
+			r = (int)((float)i/500 * 255);
+			
+			if( (int)distance(i, j, 0, 0) < 175 ) {
+				g = (int)(((175 - distance(i, j, 0, 0))/175)*255);
+			}
+			else if( (int)distance(i, j, 500, 0) < 150 ) {
+				g = (int)(((150 - distance(i, j, 500, 0))/150)*255);
+			}
+			else if( (int)distance(i, j, 0, 500) < 200 ) {
+				g = (int)(((200 - distance(i, j, 0, 500))/200)*255);
+			}
+			else {
+				g = 0;
+			}
+			
+			b = (int)((float)j/500 * 255);
+			
+			sprintf(buffer, "%i %i %i ", r, g, b );
+			write(fd, buffer, strlen(buffer));
+			memset(buffer, '\0', bufmax);
+	    }
+	    write(fd, "\n", 2);
+	}
+	
+}
