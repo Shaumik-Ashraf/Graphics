@@ -6,13 +6,13 @@
 Compressed vs Uncompressed
 
 Compressed
--smaller
--processing involved
--ex: jpg/jpeg, webp, png, gif
+ - smaller
+ - processing involved
+ - ex: jpg/jpeg, webp, png, gif
 
 Uncompressed
--raw image data
--ex: bitmap, tiff, raw(nef)
+ - raw image data
+ - ex: bitmap, tiff, raw(nef)
 
 Lossy vs Lossless
 -Lossy loses some original info
@@ -58,4 +58,34 @@ Commands:
 -convert <file>.ppm <file>.png
 
 DO NOT ADD PPM TO GITHUB
+
+##2/5/16
+####Github
+ - Use .gitignore
+ - Use submodules (aliases for repos)
+
+####Line Algorithm
+######Bresenham's Line Algorithm
+y=mx+b
+
+y=(dy/dx)x+b (d=delta)
+
+(dx)y=(dy)x+(dx)b
+
+0=(dy)x-(dx)y+(dx)b
+
+let A=dy, B=-dx, C=(dx)b
+
+0=Ax+By+c
+
+f(x,y)=Ax+By+C
+
+if( f(x,y)==0 ) then (x,y) on line
+
+if( f(x,y) is in Octant I ) then its slope is positive &&
+	if( f(x, y) > 0 ) then (x,y) is below the line
+	if( f(x, y) < 0 ) then (x,y) is above the line
+
+Magnitude gives distance; sign gives direction
+
 
