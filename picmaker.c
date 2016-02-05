@@ -9,6 +9,7 @@
 void mkpic0(int fd, char* buffer, int bufmax);
 void mkpic1(int fd, char* buffer, int bufmax);
 void mkpic2(int fd, char* buffer, int bufmax);
+void mkpic3(int fd, char* buffer, int bufmax);
 
 int main(int argc, char* argv[]) {
 
@@ -70,11 +71,26 @@ void mkpic1(int fd, char* buffer, int bufmax) {
 
 void mkpic2(int fd, char* buffer, int bufmax) {
 	
-	int i, j, b;
+	int i, j;
 	
 	for(i=0; i<500; i++) {
 		for(j=0; j<500; j++) {
 			sprintf(buffer, "%i %i %i ", 0, 0, (int)(sin((double)i)*255) );
+			write(fd, buffer, strlen(buffer));
+			memset(buffer, '\0', bufmax);
+	    }
+	    write(fd, "\n", 2);
+	}
+	
+}
+
+void mkpic3(int fd, char* buffer, int bufmax) {
+	
+	int i, j, b;
+	
+	for(i=0; i<500; i++) {
+		for(j=0; j<500; j++) {
+			sprintf(buffer, "%i %i %i ", (int)(cos((double)(j*0.01))*255), 0, (int)(sin((double)(i*0.01))*255) );
 			write(fd, buffer, strlen(buffer));
 			memset(buffer, '\0', bufmax);
 	    }
