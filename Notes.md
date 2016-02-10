@@ -59,7 +59,7 @@ Commands:
 
 DO NOT ADD PPM TO GITHUB
 
-##2/5/16 - 2/7/16
+##2/5/16 - 2/9/16
 ####Github
  - Use .gitignore
  - Use submodules (aliases for repos)
@@ -154,6 +154,64 @@ while( x<x1 ) {
 	if( d>0 ) y++;
 
 	x++;
+
+}
+
+##2/10/16
+####Line Algorithm (Octant I)
+
+to draw line from (x0,y0) to (x1,y1)
+
+x=x0, y=y0;
+
+A=y1-y0, B=x1-x0;
+
+d=2A+B
+
+while(x<=x1) {
+
+	plot(x,y)
+
+	if( d>0 ) {
+
+		y+=1; d+=2B;
+
+	}
+
+	x+=1; d+= 2A
+
+}
+
+####Octant II
+1 < slope of line
+
+for point (x,y) next possible point (x,y+1) or (x+1,y+1)
+
+next possible points' midpoint changes, changing d
+
+other stuff changes too
+
+####Line Algorithm (Octant II)
+
+to draw line from (x0,y0) to (x1,y1)
+
+x=x0, y=y0;
+
+A=y1-y0, B=x1-x0;
+
+d=A+2B
+
+while(x<=x1) {
+
+	plot(x,y)
+
+	if( d<0 ) {
+
+		x+=1; d+=2A;
+
+	}
+
+	y+=1; d+=2B;
 
 }
 
