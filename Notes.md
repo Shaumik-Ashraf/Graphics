@@ -215,3 +215,66 @@ while(x<=x1) {
 
 }
 
+##2/22/16
+####Using Matrices
+
+######Point Matrix
+ - [P_0 P_1 P_2 P_3 P_4 ...]
+ - Draw line between each adjacent point
+ - FAILS
+
+######Shape Matrix
+ - [[P_0 P_1 P_2] [P_3 P_4 P_5]]
+ - Draws closed shapes only
+ - 3D array
+
+###### (?) "Null Matrix flavor/variant of edge matrix"
+ - [P_0 P_1 P_2 P_0 NUL P_3 P_4 P_5 P_3 NUL]
+ - 
+
+######Edge Matrix
+ - [P_0 P_1 P_1 P_2 P_2 P_3 ...]
+ - More Space Extensive
+ - Draw every pair of points
+
+#######Connection Matrix
+ - Array of Points
+ - Boolean matrix where element (i,j) is true of Points i and j have a line
+
+NOTE: Points are Arrays themselves
+
+Points Will be: [X, Y, Z, 1]
+
+##Matrix Math
+ - Scalar Multiplication
+ - Matrix Multiplication
+ - Matrix Multiplication Identity
+
+####Scalar Multiplication
+```
+foo(scalar s, matrix M) {
+	for(i=0; i<rows; i++) {
+		for(j=0; j<cols; j++) {
+			M[i][j] *= s;
+		}
+	}
+}
+```
+
+####Matrix Multiplication
+ - non commutative
+ - number of cols in first matrix must equal number of rows of second matrix
+```
+
+```
+
+####Matrix Multiplication Identity
+######Identity Matrix
+ - All diagonal values are 1; all other values are 0
+ - Square Matrix
+ - Any matrix times an identity matrix is the former matrix
+
+####Graphics Matrics
+
+A set of points is always a 4xN matrix, where N is number of points
+

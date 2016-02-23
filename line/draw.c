@@ -13,21 +13,21 @@ void draw_line(int x0, int y0, int x1, int y1, screen s, color c) {
 	int A=y1-y0, B=x1-x0;
 	int d;
 
-	
+
 	//octant I
-	d=2*A+B;
+	d = 2*A + B;
 
 	while(x<=x1) {
 		
 		plot(s, c, x, y);
 		
-		if( d>0 ) { 
-			y+=1;
-			d+=(2*B);
+		if( d>0 ) {
+			y += 1;
+			d += (2*B);
 		}
 	
-		x+=1;
-		d+=(2*A);
+		x += 1;
+		d += (2*A);
 
 	}
 
