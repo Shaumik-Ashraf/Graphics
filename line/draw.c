@@ -84,11 +84,11 @@ void draw_line(int x0, int y0, int x1, int y1, screen s, color c) {
 			plot(s, c, x, y);
 			
 			if( d<0 ) { 
-				x-=1;
+				x+=1;
 				d+=(2*A);
 			}
 		
-			y+=1;
+			y-=1;
 			d+=(2*B);
 
 		} //close loop
