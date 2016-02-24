@@ -16,12 +16,12 @@ void draw_line(int x0, int y0, int x1, int y1, screen s, color c) {
 		draw_line(x1, y1, x0, y0, s, c);
 	}
 	
-	/*if( x0==x1 ) { //vertical case - CAUSING SEG FAULT
-		while(y<y1) {
-			plot(s, c, x, y);
-			y++;
-		}
-	}*/
+	if( x0==x1 ) { //vertical case - CAUSING SEG FAULT
+	//	while(y<y1) {
+	//		plot(s, c, x, y);
+	//		y++;
+	//	}
+	}
 	else if( y0==y1 ) {  //horizontal case
 		while(x<=x1) {
 			plot(s, c, x, y);
