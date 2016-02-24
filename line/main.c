@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 
 #include "ml6.h"
 #include "display.h"
@@ -58,11 +59,8 @@ int main() {
   //save_ppm(s, "lines.ppm");
 
   //Draw gallery line submission
+  /*
+  clear_screen(s);
   
-  screen s2;
-  color c2;
-  
-  
-  clear_screen(s2);
-  
+  */
 }  

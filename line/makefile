@@ -1,5 +1,5 @@
 OBJECTS= main.o draw.o display.o
-CFLAGS= -Wall
+CFLAGS= -Wall -lm
 CC= gcc
 
 all: $(OBJECTS)
