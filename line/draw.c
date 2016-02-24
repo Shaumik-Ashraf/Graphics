@@ -78,8 +78,29 @@ void draw_line(int x0, int y0, int x1, int y1, screen s, color c) {
 
 		} //close loop
 	}
-	else if( A < B );// { //octant III case
-		/* fails... 
+	else if( A < B ) {// { //octant VII case
+		
+		y *= -1;
+		A = (-1*y1) - (-1*y0);
+		
+		d = A + (2*B);
+
+		while(y<=y1) {
+			
+			plot(s, c, x, y*-1);
+			
+			if( d<0 ) { 
+				x+=1;
+				d+=(2*A);
+			}
+		
+			y+=1;
+			d+=(2*B);
+
+		} //close loop
+		
+		/*
+		//fails... 
 		d = A + (2*B);
 
 		while(y<=y1) {
@@ -95,8 +116,8 @@ void draw_line(int x0, int y0, int x1, int y1, screen s, color c) {
 			d+=(2*B);
 
 		} //close loop
-		*/
-		/* Still fails :(
+		
+		// Still fails :(
 		//so reflect instead...
 		x *= -1;
 		x0 *= -1;
@@ -120,9 +141,11 @@ void draw_line(int x0, int y0, int x1, int y1, screen s, color c) {
 			d+=(2*B);
 
 		} //close loop
-		
+		*/
 	}
-	else if( B < A && A < 0 ) {  //octant IV case
+	else if( B < A && A < 0 ) {  //octant VIII case
+	
+		/*
 		d = (2*A) + B;
 
 		while(x<=x1) {
@@ -138,7 +161,9 @@ void draw_line(int x0, int y0, int x1, int y1, screen s, color c) {
 			d += (2*A);
 
 		} //close loop
-	} */
+		*/
+		;
+	}   
 	else;
 
 }
