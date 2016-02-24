@@ -53,8 +53,8 @@ int main() {
   
 */
 
-  display(s);
-  //save_extension(s, "lines.png");
-  save_ppm(s, "lines.ppm");
+  //display(s);
+  save_extension(s, "lines.png");
+  //save_ppm(s, "lines.ppm");
 
 }  

@@ -8,49 +8,77 @@
 //
 void draw_line(int x0, int y0, int x1, int y1, screen s, color c) {
 
-
 	int x=x0, y=y0;
-	int A=y1-y0, B=x1-x0;
+	int A=y1-y0, B=(-1)*(x1-x0);
 	int d;
 
-
-	//octant I
-	d = 2*A + B;
-
-	while(x<=x1) {
-		
-		plot(s, c, x, y);
-		
-		if( d>0 ) {
-			y += 1;
-			d += (2*B);
-		}
-	
-		x += 1;
-		d += (2*A);
-
+	if( !(x0<x1) ) {
+		draw_line(x1, y1, x0, y0, s, c);
 	}
-
 	
-
-	/*
-	//octant II
-	d=A+2*B;
-
-	while(y<=y1) {
-		
-		plot(s, c, x, y);
-		
-		if( d>0 ) { //CHECK!!!!
-			x+=1;
-			d+=(2*A);
+	if( x0==x1 ) { //vertical case
+		while(y<=y1) {
+			plot(s, c, x, y);
+			y++;
 		}
-	
-		y+=1;
-		d+=(2*B);
-
 	}
-	*/
+	else if( y0==y1 ) {  //horizontal case
+		while(x<=x1) {
+			plot(s, c, x, y);
+			x++;
+		}
+	}
+	else if( A == x1-x0 ) { //diagonal case (slope=1)
+		while(x<=x1) {
+			plot(s, c, x, y);
+			x++;
+			y++;
+		}
+	}
+	else if( A == B ) { //diagonal case (slope=-1)
+		while( 
+	}
+	else if( (0 < A) && (A < x1-x0) ) { //octant I
+		d = 2*A + B;
+
+		while(x<=x1) {
+			
+			plot(s, c, x, y);
+			
+			if( d>0 ) {
+				y += 1;
+				d += (2*B);
+			}
+		
+			x += 1;
+			d += (2*A);
+
+		} //close loop
+	}
+	else if( A > x1-x0 ) { //octant II
+		d=A+2*B;
+
+		while(y<=y1) {
+			
+			plot(s, c, x, y);
+			
+			if( d>0 ) { //CHECK!!!!
+				x+=1;
+				d+=(2*A);
+			}
+		
+			y+=1;
+			d+=(2*B);
+
+		} //close loop
+	}
+	else if( A < B ) { //octant III case
+		;
+	}
+	else if( B < A && A < 0 ) {  //otant IV case
+		;
+	}
+	else;
 
 }
 
