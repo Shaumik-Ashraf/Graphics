@@ -7,6 +7,9 @@
 #include "display.h"
 #include "draw.h"
 
+#define TO_RADIAN(x) (x*(3.141592/180))
+#define TO_DEGREE(x) (x*(180/3.141592))
+
 int main() {
 
   screen s;
@@ -59,8 +62,40 @@ int main() {
   //save_ppm(s, "lines.ppm");
 
   //Draw gallery line submission
-  /*
+  
   clear_screen(s);
   
-  */
+  
+  int i, j, k;
+  int theta = 30;
+  int dtheta = 15;
+  int x=XRES, y=0;
+  int tx, ty;
+  
+  c.red = 0;
+  c.green = 0;
+  c.blue = MAX_COLOR;
+  
+  for(i=0; i<50; i++) {
+  	
+  	draw_line(0, 0, x, y, s, c);
+  	
+  	theta += dtheta;
+  	dtheta -= (50-i);
+  	if( dtheta < 2 ) {
+  		dtheta = 2;
+  	}
+  	
+  	tx = x;
+  	ty = y;
+  	
+  	x = (int)(tx*cos( TO_RADIAN(theta) ) - ty*sin( TO_RADIAN(theta) ));
+  	y = (int)(tx*sin( TO_RADIAN(theta) ) + ty*cos( TO_RADIAN(theta) ));
+  	
+  	
+  	
+  }
+  
+  save_extension(s, "gallery_lines.png");
+  
 }  

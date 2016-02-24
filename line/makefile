@@ -1,9 +1,9 @@
 OBJECTS= main.o draw.o display.o
-CFLAGS= -Wall -lm
+CFLAGS= -Wall
 CC= gcc
 
 all: $(OBJECTS)
-	$(CC) -o main.exe $(OBJECTS)
+	$(CC) -o main.exe $(OBJECTS) -lm 
 
 main.o: main.c display.h draw.h ml6.h
 	$(CC) -c main.c
