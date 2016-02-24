@@ -106,7 +106,7 @@ void draw_line(int x0, int y0, int x1, int y1, screen s, color c) {
 		y *= -1;
 		A = (-1*y1) - (-1*y0);
 		
-		d = A + (2*B);
+		d = (2*A) + B;
 	
 		while(x<=x1) {
 			
