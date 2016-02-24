@@ -17,7 +17,7 @@ void draw_line(int x0, int y0, int x1, int y1, screen s, color c) {
 	}
 	
 	if( x0==x1 ) { //vertical case - CAUSING SEG FAULT
-	//	while(y<y1) {
+	//	while(y<y1-1) {
 	//		plot(s, c, x, y);
 	//		y++;
 	//	}
@@ -76,7 +76,7 @@ void draw_line(int x0, int y0, int x1, int y1, screen s, color c) {
 
 		} //close loop
 	}
-	else;/* if( A < B ) { //octant III case
+	else if( A < B ) { //octant III case
 		d = A + (2*B);
 
 		while(y<=y1) {
@@ -110,7 +110,7 @@ void draw_line(int x0, int y0, int x1, int y1, screen s, color c) {
 
 		} //close loop
 	}
-	else;*/
+	else;
 
 }
 
