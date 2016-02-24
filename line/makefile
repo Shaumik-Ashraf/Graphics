@@ -3,7 +3,7 @@ CFLAGS= -Wall
 CC= gcc
 
 all: $(OBJECTS)
-	$(CC) -o main $(OBJECTS)
+	$(CC) -o main.exe $(OBJECTS)
 
 main.o: main.c display.h draw.h ml6.h
 	$(CC) -c main.c
@@ -15,4 +15,5 @@ dsiplay.o: display.c display.h ml6.h
 	$(CC) $(CFLAGS) -c display.c
 
 clean:
-	rm *.o *~
+	touch t.o t~ t.exe
+	rm *.o *~ *.exe

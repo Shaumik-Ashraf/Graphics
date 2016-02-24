@@ -36,7 +36,11 @@ void draw_line(int x0, int y0, int x1, int y1, screen s, color c) {
 		}
 	}
 	else if( A == B ) { //diagonal case (slope=-1)
-		while( 
+		while(x<=x1) {
+			plot(s, c, x, y);
+			x++;
+			y--;
+		}
 	}
 	else if( (0 < A) && (A < x1-x0) ) { //octant I
 		d = 2*A + B;
