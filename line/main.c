@@ -57,4 +57,12 @@ int main() {
   save_extension(s, "lines.png");
   //save_ppm(s, "lines.ppm");
 
+  //Draw gallery line submission
+  
+  screen s2;
+  color c2;
+  
+  
+  clear_screen(s2);
+  
 }  

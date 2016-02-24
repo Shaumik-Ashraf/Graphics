@@ -76,7 +76,7 @@ void draw_line(int x0, int y0, int x1, int y1, screen s, color c) {
 
 		} //close loop
 	}
-	else if( A < B ) { //octant III case
+	else if( A < B );// { //octant III case
 		/* fails... 
 		d = A + (2*B);
 
@@ -94,6 +94,7 @@ void draw_line(int x0, int y0, int x1, int y1, screen s, color c) {
 
 		} //close loop
 		*/
+		/* Still fails :(
 		//so reflect instead...
 		x *= -1;
 		x0 *= -1;
@@ -135,7 +136,7 @@ void draw_line(int x0, int y0, int x1, int y1, screen s, color c) {
 			d += (2*A);
 
 		} //close loop
-	}
+	} */
 	else;
 
 }
