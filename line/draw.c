@@ -99,61 +99,21 @@ void draw_line(int x0, int y0, int x1, int y1, screen s, color c) {
 
 		} //close loop
 		
-		/*
-		//fails... 
-		d = A + (2*B);
 
-		while(y<=y1) {
-			
-			plot(s, c, x, y);
-			
-			if( d<0 ) { 
-				x+=1;
-				d+=(2*A);
-			}
-		
-			y-=1;
-			d+=(2*B);
-
-		} //close loop
-		
-		// Still fails :(
-		//so reflect instead...
-		x *= -1;
-		x0 *= -1;
-		x1 *= -1;
-
-		B=(-1)*(x1-x0);
-		
-		//copy of Octant II:
-		d = A + (2*B);
-
-		while(y<=y1) {
-			
-			plot(s, c, (-1)*x, y);
-			
-			if( d<0 ) { 
-				x+=1;
-				d+=(2*A);
-			}
-		
-			y+=1;
-			d+=(2*B);
-
-		} //close loop
-		*/
 	}
 	else if( B < A && A < 0 ) {  //octant VIII case
 	
-		/*
-		d = (2*A) + B;
-
+		y *= -1;
+		A = (-1*y1) - (-1*y0);
+		
+		d = A + (2*B);
+	
 		while(x<=x1) {
 			
-			plot(s, c, x, y);
+			plot(s, c, x, y*-1);
 			
 			if( d>0 ) {
-				y -= 1;
+				y += 1;
 				d += (2*B);
 			}
 		
@@ -161,8 +121,7 @@ void draw_line(int x0, int y0, int x1, int y1, screen s, color c) {
 			d += (2*A);
 
 		} //close loop
-		*/
-		;
+	
 	}   
 	else;
 
