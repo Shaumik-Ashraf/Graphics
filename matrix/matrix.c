@@ -77,15 +77,33 @@ Returns:
 print the matrix
 */
 void print_matrix(struct matrix *m) {
+	int i, j;
+	for(i=0; i<m->rows; i++) {
+		printf("[");
+		for(j=0; j<m->lastcol+1; j++) {
+			if( j==m->lastcol ) {
+				printf("%lf", m->m[i][j]);
+			}
+			else {
+				printf("%lf; ", m->m[i][j]);
+			}
+		}
+		printf("]\n");
+	}
 }
 
 /*-------------- void ident() --------------
 Inputs:  struct matrix *m <-- assumes m is a square matrix
-Returns: 
+		 also assumes m is allocated
+Returns:
 
 turns m in to an identity matrix
 */
 void ident(struct matrix *m) {
+	int i, j;
+	for(i=0; i<m->rows; i++) {
+		for(j=0; j<m->cols; j++) {
+			m->m[i][j] = ( i==j ? 1 : 0 );
 }
 
 
@@ -97,19 +115,34 @@ Returns:
 multiply each element of m by x
 */
 void scalar_mult(double x, struct matrix *m) {
+	int i, j;
+	for( i=0; i<m->rows; i++ ) 
+		for( j=0; j<m->cols; j++) 
+			m->m[i][j] *= x;
+			
 }
 
 
 /*-------------- void matrix_mult() --------------
 Inputs:  struct matrix *a
          struct matrix *b 
+		 assumes a->rows = b->cols
 Returns: 
 
 a*b -> b
 */
 void matrix_mult(struct matrix *a, struct matrix *b) {
+	
+	int i, j, k;
+	
+	/** CHECK!!!!!!!!!!!!!! */
+	for(i=0, i<a->rows, i++) for(j=0; j<b->cols; j++) {
+						b[i][j]=0;
+						for(k=0; k<n; k++)
+							b[i][j]+=b[k][j]*a[i][k];
+	}
+	
 }
-
 
 
 /*-------------- void copy_matrix() --------------
