@@ -278,3 +278,55 @@ foo(scalar s, matrix M) {
 
 A set of points is always a 4xN matrix, where N is number of points
 
+##2/24/16 - 2/25/16
+
+#####Scaling
+(x,y,z) ---Scale(a,b,c)---> (ax,by,cz)
+
+[a000][x]    [ax]
+
+[0b00][y] -- [by]
+
+[00c0][z] -- [cz]
+
+[000d][1]    [dy]
+
+Note: dilates _from center_
+
+####Translation
+
+(x,y,z)---Translate(a,b,c)-->(x+a,b+y,c+z)
+
+[100a][x]   [x+a]
+[010b][y] --[y+b]
+[001c][z] --[c+z]
+[0001][1]   [ 1 ]
+
+####Rotation
+
+(x,y,z)---Rotate(a,b,c,o)-->
+
+3D rotations require _axis of rotation_ and angle
+
+A 2d rotation of point (x,y) by o degrees is xcos(o)-ysin(o),xsin(o)+ycos(o);
+
+For 3d rotation about x, y, _or_ z-axis, use 2d rotation on plane yz, xz, xy
+
+####Applying (affine) transformations
+let E_0 be an Edge matrix
+
+let S be Scale matrix
+
+let T be Translation matrix
+
+let R  be Rotation matrix
+
+
+
+Translation: T*E0 = E1 translated
+
+Scale Image: S*E1 = E2 translated & scaled
+
+A Rotation : R*E2 = E3 translated & scaled & rotated
+
+E3 = R*S*T*E0 = (R*S*T)*E0 _Matrix multiplication is associative_

@@ -101,8 +101,8 @@ turns m in to an identity matrix
 */
 void ident(struct matrix *m) {
 	int i, j;
-	for(i=0; i<m->rows; i++) {
-		for(j=0; j<m->cols; j++) {
+	for(i=0; i<m->rows; i++)
+		for(j=0; j<m->cols; j++)
 			m->m[i][j] = ( i==j ? 1 : 0 );
 }
 
@@ -136,11 +136,12 @@ void matrix_mult(struct matrix *a, struct matrix *b) {
 	int i, j, k;
 	
 	/** CHECK!!!!!!!!!!!!!! */
-	for(i=0, i<a->rows, i++) for(j=0; j<b->cols; j++) {
-						b[i][j]=0;
-						for(k=0; k<n; k++)
-							b[i][j]+=b[k][j]*a[i][k];
-	}
+	for(i=0, i<a->rows, i++)
+	  for(j=0; j<b->cols; j++) {
+	    b[i][j]=0;
+	    for(k=0; k<n; k++)
+	      b[i][j]+=b[k][j]*a[i][k];
+	  }
 	
 }
 
@@ -158,7 +159,8 @@ void copy_matrix(struct matrix *a, struct matrix *b) {
 
   for (r=0; r < a->rows; r++) 
     for (c=0; c < a->cols; c++)  
-      b->m[r][c] = a->m[r][c];  
+      b->m[r][c] = a->m[r][c];
+  
 }
 
 /*======== struct matrix * make_translate() ==========
@@ -169,6 +171,15 @@ Returns: The translation matrix created using x, y and z
 as the translation offsets.
 ====================*/
 struct matrix * make_translate(double x, double y, double z) {
+
+  struct matrix* T = new_matrix(4,4);
+  ident(T);
+
+  T->m[0][3]=a;
+  T->m[1][3]=b;
+  T->m[2][3]=c;
+  return(T);
+  
 }
 
 /*======== struct matrix * make_scale() ==========
@@ -179,6 +190,15 @@ Returns: The translation matrix creates using x, y and z
 as the scale factors
 ====================*/
 struct matrix * make_scale(double x, double y, double z) {
+
+  struct matrix* S = new_matrix(4,4);
+  ident(S);
+
+  S->m[0][0] = a;
+  S->m[1][1] = b;
+  S->m[2][2] = c;
+  return( S );
+ 
 }
 
 /*======== struct matrix * make_rotX() ==========
