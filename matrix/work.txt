@@ -25,33 +25,33 @@ return( S );
 
 
 double** makRotMatX(double o) {
-double r = o * 3.141592 / 180;
-double** R = makIdentityMat();
-R[1][1]=cos(r);
-R[1][2]=-1*sin(r);
-R[2][1]=sin(r);
-R[2][2]=cos(r);
-return(R);
+	double r = o * 3.141592 / 180;
+	double** R = makIdentityMat();
+	R[1][1]=cos(r);
+	R[1][2]=-1*sin(r);
+	R[2][1]=sin(r);
+	R[2][2]=cos(r);
+	return(R);
 }
 
 double** makRotMatY(double o) {
-double r = o * 3.141592 / 180;
-double** R = makIdentityMat();
-R[0][0]=cos(r);
-R[0][2]=-1*sin(r);
-R[2][0]=sin(r);
-R[2][2]=cos(r);
-return(R);
+	double r = o * 3.141592 / 180;
+	double** R = makIdentityMat();
+	R[0][0]=cos(r);
+	R[0][2]=-1*sin(r);
+	R[2][0]=sin(r);
+	R[2][2]=cos(r);
+	return(R);
 }
 
 double** makRotMatZ(double o) {
-double r = o * 3.141592 / 180;
-double** R = makIdentityMat();
-R[0][0]=cos(r);
-R[0][1]=-1*sin(r);
-R[1][0]=sin(r);
-R[1][1]=cos(r);
-return(R);
+	double r = o * 3.141592 / 180;
+	double** R = makIdentityMat();
+	R[0][0]=cos(r);
+	R[0][1]=-1*sin(r);
+	R[1][0]=sin(r);
+	R[1][1]=cos(r);
+	return(R);
 }
 
 double** makTransMat(

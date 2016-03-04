@@ -21,10 +21,10 @@ void add_point( struct matrix * points, int x, int y, int z) {
 		grow_matrix(points, points->lastcol+1);
 	}
 
-	points->m[0] = (double)x;
-	points->m[1] = (double)y;
-	points->m[2] = (double)z;
-	points->m[3] = 1.0;
+	points->m[0][points->lastcol] = (double)x;
+	points->m[1][points->lastcol] = (double)y;
+	points->m[2][points->lastcol] = (double)z;
+	points->m[3][points->lastcol] = 1.0;
 	points->lastcol++;
 
 }
