@@ -92,7 +92,8 @@ int main() {
   	x = (int)(tx*cos( TO_RADIAN(theta) ) - ty*sin( TO_RADIAN(theta) ));
   	y = (int)(tx*sin( TO_RADIAN(theta) ) + ty*cos( TO_RADIAN(theta) ));
   	
-  	
+  	//x*= i;
+  	//y*= i;
   	
   }
   

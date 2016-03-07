@@ -4,6 +4,7 @@
 
 #include "matrix.h"
 
+
 /*-------------- struct matrix *new_matrix() --------------
 Inputs:  int rows
          int cols 
@@ -100,12 +101,15 @@ Returns:
 turns m in to an identity matrix
 */
 void ident(struct matrix *m) {
+	
   int i, j;
+  m->lastcol = m->cols-1;
   for(i=0; i<m->rows; i++) {
     for(j=0; j<m->cols; j++) {
       m->m[i][j] = ( i==j ? 1 : 0 );
     }
   }
+  
 }
 
 
@@ -120,7 +124,7 @@ multiply each element of m by x
 void scalar_mult(double x, struct matrix *m) {
   int i, j;
   for( i=0; i<m->rows; i++ ) {
-    for( j=0; j<m->cols; j++) { 
+    for( j=0; j<m->lastcol+1; j++) { 
       m->m[i][j] *= x;
     }
   }
@@ -131,7 +135,8 @@ void scalar_mult(double x, struct matrix *m) {
 /*-------------- void matrix_mult() --------------
 Inputs:  struct matrix *a
          struct matrix *b 
-		 assumes a->rows = b->cols
+		 assumes a->cols = b->rows
+		 assumes cols = lastcols+1
 Returns: 
 
 a*b -> b
@@ -181,12 +186,18 @@ as the translation offsets.
 ====================*/
 struct matrix * make_translate(double x, double y, double z) {
 
-  struct matrix* T = new_matrix(4,4);
+  struct matrix* T;
+  
+  T = new_matrix(4,4);
+  //printf("\nF_DEBUG: r:%i, c:%i \n", T->rows, T->cols);
   ident(T);
+  //printf("\nF_DEBUG: r:%i, c:%i \n", T->rows, T->cols);
 
   T->m[0][3]=x;
   T->m[1][3]=y;
   T->m[2][3]=z;
+  //iprintf("\nF_DEBUG: r:%i, c:%i \n", T->rows, T->cols);
+  
   return(T);
   
 }
