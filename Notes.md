@@ -330,3 +330,19 @@ Scale Image: S*E1 = E2 translated & scaled
 A Rotation : R*E2 = E3 translated & scaled & rotated
 
 E3 = R*S*T*E0 = (R*S*T)*E0 _Matrix multiplication is associative_
+
+
+##3/3/2016
+
+####Parametric Equations
+ - Non-parameterized equation: y=f(x); if x changes, y changes, and vice-versa
+ - Parametric Equation: x=f(t), y=g(t); x and y are no longer related; t is a parameter off of which x and y are based
+ - In graphics, we generate a bunch of xs and ys by taking t from 0 to 1 (t:0->1) (t=[0,1])
+
+Create a param_x and param_y function, then use a for-loop to get and add (x,y) coordinates
+
+Can make param functions piece wise and make a bunch of shapes.
+ 
+##3/8/16
+
+####Hermit Curves & Splines
