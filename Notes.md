@@ -343,6 +343,29 @@ Create a param_x and param_y function, then use a for-loop to get and add (x,y) 
 
 Can make param functions piece wise and make a bunch of shapes.
  
-##3/8/16
+##3/8/16 - 3/10/16
 
 ####Hermit Curves & Splines
+
+[+2 -2 +1 +1][P_0x]   [ax]
+[-3 +3 -2 +1][P_1x] = [bx]
+[ 0  0 +1  0][R_0x]   [cy]
+[ 1  0  0  0][R_1x]   [dy]
+  Inverse H    G       P
+
+####Bezier Curves
+
+Linear (Given: P_0, P_1)
+ * P(t) = (1-t)P_0 + tP_1
+
+Quadratic (Given: P_0, P_1, P_2)
+ * Q(t) = (1-t)Q_0 + tQ_1
+ * Q_0(t) = (1-t)P_0 + tP_1
+ * Q_1(t) = (1-t)P_1 + tP_2
+ * Simplified: R(t) = (1-t)(1-t)P_0 + t(1-t)P_1 + t(t)P_2
+
+Cubic (Given 4 points)
+ * S(t) = (1-t)S_0 + tS_1
+ * S_0 and S_1 are quadratics
+ * SImplified: (1-t)^(3)P_0 + 3t(1-t)^(2)P_1 + 3(t)^(2)(1-t)P_2 + (t)^(3)P_3
+

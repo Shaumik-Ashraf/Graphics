@@ -38,7 +38,23 @@ int main() {
   
   printf("\n\nPrevious Square after T(1,1,0)\n");
   print_matrix(edges);
+
   
+  ident(transform);
+  temp = make_translate(100,100,0);
+  matrix_mult( temp, transform );
+  printf("\nDEBUG: temp matrix\n"); print_matrix(temp); 
+  free_matrix(temp);
+  printf("\nDEBUG: transform matrix\n"); print_matrix(transform);
+  matrix_mult( transform, edges ); 
+  
+  printf("\n\nPrevious Square after T(1,1,0)\n");
+  print_matrix(edges);
+  
+
+
   free_matrix( transform );
   free_matrix( edges );
 }  
+
+
