@@ -353,6 +353,9 @@ Can make param functions piece wise and make a bunch of shapes.
 [ 1  0  0  0][R_1x]   [dy]
   Inverse H    G       P
 
+Multiply givens by Inverse H matrix to obtain coefficients
+
+
 ####Bezier Curves
 
 Linear (Given: P_0, P_1)
@@ -368,4 +371,22 @@ Cubic (Given 4 points)
  * S(t) = (1-t)S_0 + tS_1
  * S_0 and S_1 are quadratics
  * SImplified: (1-t)^(3)P_0 + 3t(1-t)^(2)P_1 + 3(t)^(2)(1-t)P_2 + (t)^(3)P_3
+
+a = -P_0 + 3P_1 - 3P_2 + P_3
+
+b = 3P_0 - 6P_1 + 3P_2
+
+c = -3P_0 + 3P_1
+
+d = P_0
+
+[-1 +3 -3 +1]
+[+3 -6 +3  0]
+[-3 +3  0  0]
+[+1  0  0  0]
+ Inverse B
+
+Multiply input points by this matrix to get coeficients (Bezier)
+
+
 
