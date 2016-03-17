@@ -107,13 +107,13 @@ void parse_file ( char * filename,
       ident(transform);
     }
     else if( strcmp(line, "scale")==0 ) {
-      //param format: x-scale-factor<space>y-scale-factor<space>z-scale-factor<NL>
+      //param format: x-scale-factor<space>y-scale-factor<space>z-scale-factor
       
       struct matrix* scale_matrix;
       double xs, ys, zs;
 
       fgets(line, 255, f);
-      sscanf(line, "%lf %lf %lf\n", &xs, &ys, &zs);
+      sscanf(line, "%lf %lf %lf", &xs, &ys, &zs);
 
       scale_matrix = make_scale(xs, ys, zs);
       matrix_mult( transform, scale_matrix );
@@ -122,12 +122,12 @@ void parse_file ( char * filename,
       
     }
     else if( strcmp(line, "translate")==0 ) {
-
+      //param format: x-translate<space>y-translate<space>z-translate
       struct matrix* trans_mat;
       double x, y, z;
 
       fgets(line, 255, f);
-      sscanf(line, "%lf %lf %lf\n", &x, &y, &z);
+      sscanf(line, "%lf %lf %lf", &x, &y, &z);
       
       trans_mat = make_translate(x, y, z);
       matrix_mult(transform, trans_mat);
@@ -136,16 +136,49 @@ void parse_file ( char * filename,
 		  
     }
     else if( strcmp(line, "xrotate")==0 ) {
+      //param format: angle-of-rotation-degrees
+      struct matrix* rot_mat;
+      double th;
+
+      fgets(line, 255, f);
+      sscanf(line, "%lf", &th);
+
+      rot_mat = make_rotX(theta); //check if I hav to convert to radians here
+      matrix_mult(transform, rot_mat);
+
+      free_matrix(rot_mat);
 
     }
     else if( strcmp(line, "yrotate")==0 ) {
+      //param format: angle-of-rotation-degrees
+      struct matrix* rot_mat;
+      double th;
+
+      fgets(line, 255, f);
+      sscanf(line, "%lf", &th);
+
+      rot_mat = make_rotY(theta); //check if I hav to convert to radians here
+      matrix_mult(transform, rot_mat);
+
+      free_matrix(rot_mat);
 
     }
     else if( strcmp(line, "zrotate")==0 ) {
+      //param format: angle-of-rotation-degrees
+      struct matrix* rot_mat;
+      double th;
+
+      fgets(line, 255, f);
+      sscanf(line, "%lf", &th);
+
+      rot_mat = make_rotZ(theta); //check if I hav to convert to radians here
+      matrix_mult(transform, rot_mat);
+
+      free_matrix(rot_mat);
 
     }
     else if( strcmp(line, "apply")==0 ) {
-
+      
     }
     else if( strcmp(line, "display")==0 ) {
 
