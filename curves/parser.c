@@ -84,7 +84,15 @@ void parse_file ( char * filename,
     printf(":%s:\n",line);
 
     if( strcmp(line, "line")==0 ) {
+      //assume paramter format: x0<SPACE>y0<SPACE>x1<SPACE>y1<NEWLINE>
 
+      int x0, y0, x1, y1;
+      
+      fgets(line, 255, f);
+      sscanf(line, "%i %i %i %i\n", &x0, &y0, &x1, &y1);
+
+      add_edge(pm, x0, y0, 0, x1, y1, 0);
+      
     }
     else if( strcmp(line, "circle")==0 ) {
 
@@ -96,13 +104,36 @@ void parse_file ( char * filename,
 
     }
     else if( strcmp(line, "ident")==0 ) {
-
+      ident(transform);
     }
     else if( strcmp(line, "scale")==0 ) {
+      //param format: x-scale-factor<space>y-scale-factor<space>z-scale-factor<NL>
+      
+      struct matrix* scale_matrix;
+      double xs, ys, zs;
 
+      fgets(line, 255, f);
+      sscanf(line, "%lf %lf %lf\n", &xs, &ys, &zs);
+
+      scale_matrix = make_scale(xs, ys, zs);
+      matrix_mult( transform, scale_matrix );
+
+      free_matrix(scale_matrix);
+      
     }
     else if( strcmp(line, "translate")==0 ) {
 
+      struct matrix* trans_mat;
+      double x, y, z;
+
+      fgets(line, 255, f);
+      sscanf(line, "%lf %lf %lf\n", &x, &y, &z);
+      
+      trans_mat = make_translate(x, y, z);
+      matrix_mult(transform, trans_mat);
+
+      free_matrix(trans_mat);
+		  
     }
     else if( strcmp(line, "xrotate")==0 ) {
 
