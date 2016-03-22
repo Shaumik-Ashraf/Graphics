@@ -7,6 +7,39 @@
 #include "draw.h"
 #include "matrix.h"
 
+/*======== my helper function!! ===========
+  Inputs: struct matrix* points => edge matrix
+		double (*param_x)(double) => parametric equation function to generate x coordinates
+		struct matrix* param_x_arg => matrix of stuff to be passed to param functions
+		double (*param_y)(double) => parametric equation function to generate y coordinates
+		struct matrix* param_y_arg => matrix of stuff to be passed to param functions
+		double step => da step
+		
+  Returns:
+		
+		runs paramtric equation for 0<=t<1 in step increments generating points added to points edge matrix
+		
+		I made this bc I'm prbly gunna mess this up and am hoping to isolate the failure
+shaumik ashraf
+======================*/
+static void add_parametric(struct matrix* points, 
+			double (*param_x)(double, struct matrix*),
+			struct matrix* param_x_arg,
+			double (*param_y)(double, struct matrix*),
+			struct matrix* param_y_arg,
+			double step) {
+
+	double x, y;
+	double t;
+	
+	for(t=0.00000; t<1.00000000; t+=step) {
+		x = param_x(t, param_x_arg);
+		y = param_y(t, param_y_arg);
+		
+		add_point(points, x, y, 0);
+	}
+
+}
 
 /*======== void add_circle() ==========
   Inputs:   struct matrix * points
@@ -23,8 +56,8 @@
 void add_circle( struct matrix * points, 
 		 double cx, double cy, 
 		 double r, double step ) {
-  
-  int x, y;
+  /* TRY BOTH!!
+  double x, y;
   double t;
 
   for(t=0; t<1.00000; t+=step) {
@@ -33,8 +66,29 @@ void add_circle( struct matrix * points,
   }
 
   add_point(points, x, y, 0);
+  */
+  struct matrix* x_arg = new_matrix(1, 2);
+  struct matrix* y_arg = new_matrix(1, 2);
+  
+  x_arg->m[0][0] = cx;
+  x_arg->m[0][1] = r;
+  
+  y_arg->m[0][0] = cy;
+  y_arg->m[0][1] = r;
+  
+  add_parametric(points, circle_param_x, x_arg, circle_param_y, y_arg, step);
   
 }
+
+//center_x_and_radius format: [cx, r]
+static double circle_param_x(double t, struct matrix* center_x_and_radius) {
+	return( center_x_and_radius->m[0][0] + center_x_and_radius->m[0][1] * cosf( t*M_PI ) );
+}
+
+//center_y_and_radius format: [cy, r]
+static double circle_param_y(double t, struct matrix* center_y_and_radius) {
+	return( center_x_and_radius->m[0][0] + center_x_and_radius->m[0][1] * sinf( t*M_PI ) );
+} //and now i'm finding this to be a dumb idea
 
 /*======== void add_curve() ==========
 Inputs:   struct matrix *points
@@ -63,6 +117,37 @@ void add_curve( struct matrix *points,
 		double x2, double y2, 
 		double x3, double y3, 
 		double step, int type ) {
+
+	struct matrix* xcoefs = generate_curve_coefs(x0, x1, x2, x3, type);
+	struct matrix* ycoefs = generate_curve_coefs(y0, y1, y2, y3, type);
+	
+	if( type==HERMITE_MODE ) {
+		add_paramteric(points, hermite_curve_param_x, xcoefs, hermite_curve_param_y, ycoefs, step);
+	}
+	else {
+		add_paramteric(points, bezier_curve_param_x, xcoefs, bezier_curve_param_y, ycoefs, step);
+	}
+	
+}
+
+//xcoefs format: [a, b, c, d] for at^3+bt^2+ct+d
+static double bezier_curve_param_x(double t, struct matrix* xcoefs) {
+	return( xcoefs->m[0][1]*t*t*t + xcoefs->m[0][2]*t*t + xcoefs->m[0][3]*t + xcoefs->m[0][4] );
+}
+
+//ycoefs format: [a, b, c, d] for at^3+bt^2+ct+d
+static double bezier_curve_param_y(double t, struct matrix* ycoefs) {
+	return(  ycoefs->m[0][1]*t*t*t + ycoefs->m[0][2]*t*t + ycoefs->m[0][3]*t + ycoefs->m[0][4]  );
+}
+
+//xcoefs format: [a, b, c, d] for at^3+bt^2+ct+d
+static double hermite_curve_param_x(double t, struct matrix* xcoefs) {
+	return(  xcoefs->m[0][1]*t*t*t + xcoefs->m[0][2]*t*t + xcoefs->m[0][3]*t + xcoefs->m[0][4]  );
+}
+
+//ycoefs format: [a, b, c, d] for at^3+bt^2+ct+d
+static double hermite_curve_param_y(double t, struct matrix* ycoefs) {
+	return(  ycoefs->m[0][1]*t*t*t + ycoefs->m[0][2]*t*t + ycoefs->m[0][3]*t + ycoefs->m[0][4]  );
 }
 
 /*======== void add_point() ==========

@@ -67,10 +67,16 @@ for PI)
 void parse_file ( char * filename, 
                   struct matrix * transform, 
                   struct matrix * pm,
-                  screen s) {
+                  screen s ) {
 
   FILE *f;
   char line[256];
+  color c;
+  
+  //random dflt color!!
+  c.red = 255;
+  c.green = 50;
+  c.blue = 255;
   
   clear_screen(s);
 
@@ -86,22 +92,47 @@ void parse_file ( char * filename,
     if( strcmp(line, "line")==0 ) {
       //assume paramter format: x0<SPACE>y0<SPACE>x1<SPACE>y1<NEWLINE>
 
-      int x0, y0, x1, y1;
-      
+      double x0, y0, x1, y1;
+      //add z dimension??
+	  
       fgets(line, 255, f);
-      sscanf(line, "%i %i %i %i\n", &x0, &y0, &x1, &y1);
+      sscanf(line, "%lf %lf %lf %lf", &x0, &y0, &x1, &y1);
 
       add_edge(pm, x0, y0, 0, x1, y1, 0);
       
     }
     else if( strcmp(line, "circle")==0 ) {
-
+	  //assume param format: cx<SPACE>cy<SPACE>radius
+	  
+	  double cx, cy, r, step=0.01;  //default step
+	  
+	  fgets(line, 255, f);
+	  sscanf(line, "%lf %lf %lf", &cx, &cy, &r);
+	  
+	  add_circle(pm, cx, cy, r, step);
+	  
     }
     else if( strcmp(line, "hermite")==0 ) {
-
+		//param format: x0<space>y0<space>x1<space>y1<space>rx0<space>ry0<space>rx1<space>ry1
+		
+		double x0, y0, x1, y1, rx0, ry0, rx1, ry1, step=0.01; //dflt step
+		
+		fgets(line, 255, f);
+		sscanf(line, "%lf %lf %lf %lf %lf %lf %lf %lf", &x0, &y0, &x1, &y1, &rx0, &ry0, &rx1, &ry1);
+		
+		add_curve(pm, x0, y0, x1, y1, rx0, ry0, rx1, ry1, step, HERMITE_MODE);
+		
     }
     else if( strcmp(line, "bezier")==0 ) {
-
+		//param format: x0<space>y0<space>x1<space>y1<space>x2<space>y2<space>x3<space>y3
+		
+		double x0, y0, x1, y1, x2, y2, x3, y3, step=0.01; //dflt step
+		
+		fgets(line, 255, f);
+		sscanf(line, "%lf %lf %lf %lf %lf %lf %lf %lf", &x0, &y0, &x1, &y1, &x2, &y2, &x3, &y3);
+		
+		add_curve(pm, x0, y0, x1, y1, rx0, ry0, rx1, ry1, step, HERMITE_MODE);
+		
     }
     else if( strcmp(line, "ident")==0 ) {
       ident(transform);
@@ -178,17 +209,37 @@ void parse_file ( char * filename,
 
     }
     else if( strcmp(line, "apply")==0 ) {
-      
+		
+		matrix_mult(transform, pm);
+	  
+		draw_lines(pm, s, c);
     }
     else if( strcmp(line, "display")==0 ) {
-
+		display(s);
     }
     else if( strcmp(line, "save")==0 ) {
-
+		//param format: save_file_name
+		fgets(line, 255, f);
+		*strchr(line, '\n') = '\0';
+		
+		save_extension(s, line);
     }
     else if( strcmp(line, "quit")==0 ) {
-      break;
+		break;
     }
+	else if( strcmp(line, "color")==0 ) { //I'm adding this; cant resist the urge
+		//param format: r<space>g<space>b<space>
+		
+		int r, g, b;
+		
+		fgets(line, 255, f);
+		sscanf(line, "%i %i %i", &r, &g, &b);
+		
+		c.red = r;
+		c.green = g;
+		c.blue = b;
+		
+	}
     else {
       printf("Command not recognized\n");
     }
