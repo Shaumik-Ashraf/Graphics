@@ -150,7 +150,7 @@ void parse_file ( char * filename,
       sscanf(line, "%lf %lf %lf", &xs, &ys, &zs);
 
       scale_matrix = make_scale(xs, ys, zs);
-      matrix_mult( transform, scale_matrix );
+      matrix_mult( scale_matrix, transform );
 
       free_matrix(scale_matrix);
       
@@ -164,7 +164,7 @@ void parse_file ( char * filename,
       sscanf(line, "%lf %lf %lf", &x, &y, &z);
       
       trans_mat = make_translate(x, y, z);
-      matrix_mult(transform, trans_mat);
+      matrix_mult(trans_mat, transform);
 
       free_matrix(trans_mat);
 		  
@@ -178,7 +178,7 @@ void parse_file ( char * filename,
       sscanf(line, "%lf", &th);
 
       rot_mat = make_rotX(th); //check if I hav to convert to radians here
-      matrix_mult(transform, rot_mat);
+      matrix_mult(rot_mat, transform);
 
       free_matrix(rot_mat);
 
@@ -192,7 +192,7 @@ void parse_file ( char * filename,
       sscanf(line, "%lf", &th);
 
       rot_mat = make_rotY(th); //check if I hav to convert to radians here
-      matrix_mult(transform, rot_mat);
+      matrix_mult(rot_mat, transform);
 
       free_matrix(rot_mat);
 
@@ -206,7 +206,7 @@ void parse_file ( char * filename,
       sscanf(line, "%lf", &th);
 
       rot_mat = make_rotZ(th); //check if I hav to convert to radians here
-      matrix_mult(transform, rot_mat);
+      matrix_mult(rot_mat, transform);
 
       free_matrix(rot_mat);
 
