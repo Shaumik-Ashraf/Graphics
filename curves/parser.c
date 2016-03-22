@@ -89,7 +89,10 @@ void parse_file ( char * filename,
     line[strlen(line)-1]='\0';
     printf(":%s:\n",line);
 
-    if( strcmp(line, "line")==0 ) {
+	if ( line[0]=='#' ) {  //allow for commenting
+		continue;
+	}
+    else if( strcmp(line, "line")==0 ) {
       //assume paramter format: x0<SPACE>y0<SPACE>x1<SPACE>y1<NEWLINE>
 
       double x0, y0, x1, y1;
@@ -131,7 +134,7 @@ void parse_file ( char * filename,
 		fgets(line, 255, f);
 		sscanf(line, "%lf %lf %lf %lf %lf %lf %lf %lf", &x0, &y0, &x1, &y1, &x2, &y2, &x3, &y3);
 		
-		add_curve(pm, x0, y0, x1, y1, rx0, ry0, rx1, ry1, step, HERMITE_MODE);
+		add_curve(pm, x0, y0, x1, y1, x2, y2, x3, y3, step, HERMITE_MODE);
 		
     }
     else if( strcmp(line, "ident")==0 ) {
@@ -174,7 +177,7 @@ void parse_file ( char * filename,
       fgets(line, 255, f);
       sscanf(line, "%lf", &th);
 
-      rot_mat = make_rotX(theta); //check if I hav to convert to radians here
+      rot_mat = make_rotX(th); //check if I hav to convert to radians here
       matrix_mult(transform, rot_mat);
 
       free_matrix(rot_mat);
@@ -188,7 +191,7 @@ void parse_file ( char * filename,
       fgets(line, 255, f);
       sscanf(line, "%lf", &th);
 
-      rot_mat = make_rotY(theta); //check if I hav to convert to radians here
+      rot_mat = make_rotY(th); //check if I hav to convert to radians here
       matrix_mult(transform, rot_mat);
 
       free_matrix(rot_mat);
@@ -202,7 +205,7 @@ void parse_file ( char * filename,
       fgets(line, 255, f);
       sscanf(line, "%lf", &th);
 
-      rot_mat = make_rotZ(theta); //check if I hav to convert to radians here
+      rot_mat = make_rotZ(th); //check if I hav to convert to radians here
       matrix_mult(transform, rot_mat);
 
       free_matrix(rot_mat);
@@ -220,15 +223,23 @@ void parse_file ( char * filename,
     else if( strcmp(line, "save")==0 ) {
 		//param format: save_file_name
 		fgets(line, 255, f);
-		*strchr(line, '\n') = '\0';
+		//*strchr(line, '\n') = '\0';
 		
-		save_extension(s, line);
+		fprintf(stderr, "DEBUG:: line:_%s_\n", line);
+		
+		if( strstr(line, ".ppm")!=NULL ) {
+			save_ppm(s, line);
+		}
+		else { 
+			save_extension(s, line);
+		}
+			
     }
     else if( strcmp(line, "quit")==0 ) {
 		break;
     }
 	else if( strcmp(line, "color")==0 ) { //I'm adding this; cant resist the urge
-		//param format: r<space>g<space>b<space>
+		//param format: r<space>g<space>b
 		
 		int r, g, b;
 		

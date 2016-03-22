@@ -22,7 +22,7 @@
 		I made this bc I'm prbly gunna mess this up and am hoping to isolate the failure
 shaumik ashraf
 ======================*/
-static void add_parametric(struct matrix* points, 
+void add_parametric(struct matrix* points, 
 			double (*param_x)(double, struct matrix*),
 			struct matrix* param_x_arg,
 			double (*param_y)(double, struct matrix*),
@@ -81,13 +81,13 @@ void add_circle( struct matrix * points,
 }
 
 //center_x_and_radius format: [cx, r]
-static double circle_param_x(double t, struct matrix* center_x_and_radius) {
+double circle_param_x(double t, struct matrix* center_x_and_radius) {
 	return( center_x_and_radius->m[0][0] + center_x_and_radius->m[0][1] * cosf( t*M_PI ) );
 }
 
 //center_y_and_radius format: [cy, r]
-static double circle_param_y(double t, struct matrix* center_y_and_radius) {
-	return( center_x_and_radius->m[0][0] + center_x_and_radius->m[0][1] * sinf( t*M_PI ) );
+double circle_param_y(double t, struct matrix* center_y_and_radius) {
+	return( center_y_and_radius->m[0][0] + center_y_and_radius->m[0][1] * sinf( t*M_PI ) );
 } //and now i'm finding this to be a dumb idea
 
 /*======== void add_curve() ==========
@@ -122,31 +122,31 @@ void add_curve( struct matrix *points,
 	struct matrix* ycoefs = generate_curve_coefs(y0, y1, y2, y3, type);
 	
 	if( type==HERMITE_MODE ) {
-		add_paramteric(points, hermite_curve_param_x, xcoefs, hermite_curve_param_y, ycoefs, step);
+		add_parametric(points, hermite_curve_param_x, xcoefs, hermite_curve_param_y, ycoefs, step);
 	}
 	else {
-		add_paramteric(points, bezier_curve_param_x, xcoefs, bezier_curve_param_y, ycoefs, step);
+		add_parametric(points, bezier_curve_param_x, xcoefs, bezier_curve_param_y, ycoefs, step);
 	}
 	
 }
 
 //xcoefs format: [a, b, c, d] for at^3+bt^2+ct+d
-static double bezier_curve_param_x(double t, struct matrix* xcoefs) {
+double bezier_curve_param_x(double t, struct matrix* xcoefs) {
 	return( xcoefs->m[0][1]*t*t*t + xcoefs->m[0][2]*t*t + xcoefs->m[0][3]*t + xcoefs->m[0][4] );
 }
 
 //ycoefs format: [a, b, c, d] for at^3+bt^2+ct+d
-static double bezier_curve_param_y(double t, struct matrix* ycoefs) {
+double bezier_curve_param_y(double t, struct matrix* ycoefs) {
 	return(  ycoefs->m[0][1]*t*t*t + ycoefs->m[0][2]*t*t + ycoefs->m[0][3]*t + ycoefs->m[0][4]  );
 }
 
 //xcoefs format: [a, b, c, d] for at^3+bt^2+ct+d
-static double hermite_curve_param_x(double t, struct matrix* xcoefs) {
+double hermite_curve_param_x(double t, struct matrix* xcoefs) {
 	return(  xcoefs->m[0][1]*t*t*t + xcoefs->m[0][2]*t*t + xcoefs->m[0][3]*t + xcoefs->m[0][4]  );
 }
 
 //ycoefs format: [a, b, c, d] for at^3+bt^2+ct+d
-static double hermite_curve_param_y(double t, struct matrix* ycoefs) {
+double hermite_curve_param_y(double t, struct matrix* ycoefs) {
 	return(  ycoefs->m[0][1]*t*t*t + ycoefs->m[0][2]*t*t + ycoefs->m[0][3]*t + ycoefs->m[0][4]  );
 }
 

@@ -359,7 +359,7 @@ struct matrix * generate_curve_coefs( double p1, double p2,
 	coefs->m[2][0] = p3;
 	coefs->m[3][0] = p4;
 	
-	matrix_mult(invers, coefs);
+	matrix_mult(inverse, coefs);
 	
 	free_matrix(inverse);
 	return(coefs);
