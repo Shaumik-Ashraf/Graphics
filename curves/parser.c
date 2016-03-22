@@ -225,7 +225,7 @@ void parse_file ( char * filename,
 		fgets(line, 255, f);
 		//*strchr(line, '\n') = '\0';
 		
-		fprintf(stderr, "DEBUG:: line:_%s_\n", line);
+		//fprintf(stderr, "DEBUG:: line:_%s_\n", line);
 		
 		if( strstr(line, ".ppm")!=NULL ) {
 			save_ppm(s, line);
