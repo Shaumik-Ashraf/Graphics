@@ -388,5 +388,18 @@ d = P_0
 
 Multiply input points by this matrix to get coeficients (Bezier)
 
+##3/21/16 - 3/  /16
+####3D Shapes
 
-
+######Spheres
+ - Draw circle
+ - Rotate circle
+```
+for(p=0; p<1; p+=step) {
+	 for(t=0; t<1; t++) {
+	 	  x = rcos(t*PI)
+		  y = rsin(t*PI)cos(p*PI*2)
+		  z = rsin(t*PI)cos(p*PI*2)
+	}
+}
+```

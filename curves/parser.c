@@ -177,7 +177,7 @@ void parse_file ( char * filename,
       fgets(line, 255, f);
       sscanf(line, "%lf", &th);
 
-      rot_mat = make_rotX(th); //check if I hav to convert to radians here
+      rot_mat = make_rotX(th * M_PI / 180); //check if I hav to convert to radians here
       matrix_mult(rot_mat, transform);
 
       free_matrix(rot_mat);
@@ -191,7 +191,7 @@ void parse_file ( char * filename,
       fgets(line, 255, f);
       sscanf(line, "%lf", &th);
 
-      rot_mat = make_rotY(th); //check if I hav to convert to radians here
+      rot_mat = make_rotY(th * M_PI / 180); //check if I hav to convert to radians here
       matrix_mult(rot_mat, transform);
 
       free_matrix(rot_mat);
@@ -205,7 +205,7 @@ void parse_file ( char * filename,
       fgets(line, 255, f);
       sscanf(line, "%lf", &th);
 
-      rot_mat = make_rotZ(th); //check if I hav to convert to radians here
+      rot_mat = make_rotZ(th * M_PI / 180); //check if I hav to convert to radians here
       matrix_mult(rot_mat, transform);
 
       free_matrix(rot_mat);

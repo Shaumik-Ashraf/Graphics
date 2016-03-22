@@ -22,16 +22,16 @@ line
 100 100 0 100 100 100
 line
 100 0 0 100 0 100
-#display
+display
 ident
 scale
 1.5 1.5 1.5
 apply
-#display
+display
 translate
 100 100 0
 apply
-#display
+display
 ident
 zrotate
 20
@@ -45,8 +45,6 @@ ident
 yrotate
 -20
 apply
-#display
-#save
-#pic.png
+display
 save
-pic.ppm
+pic.png
