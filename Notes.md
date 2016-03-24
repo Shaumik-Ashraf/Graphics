@@ -403,3 +403,8 @@ for(p=0; p<1; p+=step) {
 	}
 }
 ```
+
+####Stuff
+Find a nice curve and rotate it :smiley:
+
+Do translations and rotations on a bunch of plotted points of a 3D figure to check it out 
