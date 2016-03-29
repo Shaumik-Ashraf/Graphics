@@ -407,4 +407,47 @@ for(p=0; p<1; p+=step) {
 ####Stuff
 Find a nice curve and rotate it :smiley:
 
-Do translations and rotations on a bunch of plotted points of a 3D figure to check it out 
+Do translations and rotations on a bunch of plotted points of a 3D figure to check it out
+
+##3/29/16
+
+####Wireframe/Polygon Meshes
+
+Wireframe
+ - Lines connecting points
+ - 3d objects defined by edges connecting vertices/points of the object
+ - works well with edge matrix framework
+
+Polygon
+ - surfaces
+ - 3d objects are defined as the surfaces (triangles or quadrilaterals) that cover the object
+ - doesn't mesh well with exisiting framework (lines, edge matrices)
+ - use polygon matrices
+ - allows to make solid objects
+ - allows us to remove "back faces" of objects; you can only see half a sphere
+
+####Polygon Matrices
+
+For a top-view box (square):
+
+P0  P3
+
+[   ]
+
+[   ]
+
+P1  P2
+
+Edge Matrix = [P0,P1;P1,P2;P2,P3;...]
+
+Triangle Polygon Matrix = [P0,P1,P2;P2,P3,P0;...]
+
+
+####Edge Matrix vs Polygon Matrix
+ - plot function ----------> plot function (stays)
+ - draw line (line algo) --> draw line (stays)
+ - draw lines -------------> draw polygons (still requires draw lines)
+ - add point --------------> add point (stays)
+ - add edge ---------------> add polygon (call add point thrice) (points must be added in counter clock wise order)
+
+
