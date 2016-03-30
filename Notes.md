@@ -1,5 +1,4 @@
 #Notes
-
 ## 2/3/16
 ##### Image File Formats
 
@@ -449,5 +448,27 @@ Triangle Polygon Matrix = [P0,P1,P2;P2,P3,P0;...]
  - draw lines -------------> draw polygons (still requires draw lines)
  - add point --------------> add point (stays)
  - add edge ---------------> add polygon (call add point thrice) (points must be added in counter clock wise order)
+
+
+##3/30/16
+
+####Polygon Meshes
+Box
+ - front: [P0, P1, P2] [P2, P3, P0] ==> two triangles for front of box
+ - points must be in counter-clockwise order
+ - starting point doesn't matter
+ - YOU MUST BE CCW WITH RESPECT TO THE FACE (FACING YOU)
+ - ----(_IF FACE IS FACING YOU, THEN CROSS PRODUCT OF VECTORS CONNECTING POINTS IN ORDER POINTS TO YOU_)
+
+Sphere
+ - start with a circle, suppose with 10 points (P0 to P9)
+ - rotate circle once, yielding points (P10 to P19). Note P0=P10 and P5=P15
+ - Fill in them triangles (four points, two from prev circle, two from rotated circle, form a square, which is two traingles)
+ - points of trangle for generic case i: [i, i+1, i+n+1] [i, i+n+1, i+n]; n is number of points in initial circle (in this case 10)
+
+Sphere (case 2)
+ - start with semicircle
+ - rotate semicircle
+ - draw edge from point i to i+n
 
 
