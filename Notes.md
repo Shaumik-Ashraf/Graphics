@@ -471,4 +471,20 @@ Sphere (case 2)
  - rotate semicircle
  - draw edge from point i to i+n
 
+##4/6/10
 
+####Backface Calling
+ - process of rendering only the surfaces which are faceing forward
+ - making shapes more realistic
+ - drawing only the polygons we need
+ - the surface normal (_N_) shows the direction a surface is "facing"
+ - the view vector (aka camera) (_V_) shows the direction of the observer
+ - If the angle between the view vector and the surface normal is between 90 degrees and 270 degrees, the surface is drawn
+
+######Algorithm
+ - Calculate _N_ (_V_ is set by user)
+ - Find angle between _N_ and _V_ (let this be theta)
+ - if 90 < theta < 270 draw it
+
+_N_ is cross product of two vectors that share a common endpoint and go in different directions;
+ only works if points are counter clockwise; 3 points determine 2 vectors
