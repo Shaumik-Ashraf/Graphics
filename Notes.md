@@ -471,7 +471,7 @@ Sphere (case 2)
  - rotate semicircle
  - draw edge from point i to i+n
 
-##4/6/10
+##4/6/16
 
 ####Backface Calling
  - process of rendering only the surfaces which are faceing forward
@@ -496,4 +496,25 @@ cos(theta) (if between 90 and 270) is negative; magnitude is always positive;
 _If dot(N, V) < 0 then surface is drawn_
 
 
+##4/12/16
 
+Make new language construct for graphics interpretor that is able to
+ create variables, do variable assignement, and run loops
+
+Some objects need to be transformed independent of each other, while some
+ objects need to be transformed dependent of another; this requires a
+ relative coordinate system
+
+####Relative Coordinate System
+ - Currently nous avons a global coordinate system (each object is drawn with repsect for/to the same origin/coordinate system
+ - In a relative coordinate system each object can have its own origin/coordinate system
+ - uses stack to store various coordinate systems
+
+####Graphics Framework
+ - All transformations will be applied to top of stack (current coord. sys.)
+ - The stack will be pushed and popped as needed
+ - Drawing pipeline:
+   * Generate points that we need
+   * Multiply points by the stack top
+   * Draw the object to the screen
+   * Clear the point matrix
