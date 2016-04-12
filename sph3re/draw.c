@@ -49,6 +49,24 @@ void add_sphere( struct matrix * points,
 void generate_sphere( struct matrix * points, 
 		      double cx, double cy, double r, 
 		      double step ) {
+	
+	double t1, t2;
+	double x, y, z;
+	
+	for(t1=0.00000; t1<1.000000; t1+=step) {
+		for(t2=0.00000; t2<1.000000; t2+=step) {
+			//CHECK!!
+			x = r*cosf(t2*M_PI); 
+			y = r*sinf(t2*M_PI)*cosf(t1*M_PI*2);
+			z = r*sinf(t2*M_PI)*sinf(t1*M_PI*2);
+			
+			x += cx;
+			y += cy;
+			
+			add_point(points, x, y, z);
+		}
+	}
+	
 }    
 
 /*======== void add_torus() ==========
@@ -72,6 +90,9 @@ void generate_sphere( struct matrix * points,
 void add_torus( struct matrix * points, 
 		double cx, double cy, double r1, double r2, 
 		double step ) {
+		
+		
+		
 }
 
 /*======== void generate_torus() ==========
@@ -83,7 +104,7 @@ void add_torus( struct matrix * points,
   Returns: 
 
   Generates all the points along the surface of a 
-  tarus with center (cx, cy) and radii r1 and r2
+  torus with center (cx, cy) and radii r1 and r2
 
   Adds these points to the matrix parameter
 
@@ -92,6 +113,23 @@ void add_torus( struct matrix * points,
 void generate_torus( struct matrix * points, 
 		     double cx, double cy, double r1, double r2, 
 		     double step ) {
+			 
+	double t1, t2;
+	double x, y, z;
+	
+	for(t1=0.000000; t1<1.000000; t1+=step) {
+		for(t2=0.000000; t2<1.000000; t2+=step) {
+			x = (r1 + r2*cosf(t2*M_PI*2))*cosf(t1*M_PI*2);
+			y = (r2 + r2*sinf(t2*M_PI*2))*sinf(t1*M_PI*2);
+			z = r*sinf(t2*M_PI*2);
+			
+			x += cx;
+			y += cy;
+			
+			add_point(points, x, y, z);
+		}
+	}
+
 }
 
 /*======== void add_box() ==========
