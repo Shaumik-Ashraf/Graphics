@@ -33,7 +33,7 @@ void add_polygon( struct matrix *polygons,
 
   add_point( polygons, x0, y0, z0 );
   add_point( polygons, x1, y1, z1 );
-  add_point( polygons, x1, y1, z1 );
+  add_point( polygons, x2, y2, z2 );
   
 }
 
@@ -50,6 +50,27 @@ triangles
 jdyrlandweaver
 ====================*/
 void draw_polygons( struct matrix *polygons, screen s, color c ) {
+
+  int i;
+
+  for(i=0; i<polygons->lastcol-3 ; i+=3) {
+    //Draw P_i to P_i+1
+    draw_line( polygons->m[0][i], polygons->m[1][i],
+	       polygons->m[0][i+1], polygons->m[1][i+1],
+	       s, c );
+
+    //Draw P_i+1 to P_i+2
+    draw_line( polygons->m[0][i+1], polygons->m[1][i+1],
+	       polygons->m[0][i+2], polygons->m[1][i+2],
+	       s, c );
+
+    //Draw P_i+2 to P_i
+    draw_line( polygons->m[0][i+2], polygons->m[1][i+1],
+	       polygons->m[0][i], polygons->m[1][i+1],
+	       s, c );
+    //hopefully this works...
+  }
+
 }
 
 
@@ -78,7 +99,7 @@ void add_sphere( struct matrix * points,
   int index;
   double x, y, z;
   int num_steps;
-  
+
   num_steps = MAX_STEPS / step;
 
   temp = new_matrix( 4, num_steps * num_steps );
@@ -90,17 +111,48 @@ void add_sphere( struct matrix * points,
   latStop = num_steps;
   longStart = 0;
   longStop = num_steps;
-  
+
   for ( lat = latStart; lat < latStop; lat++ ) {
     for ( longt = longStart; longt < longStop; longt++ ) {
-      
+
       index = lat * (num_steps+1) + longt;
+      /*
       add_edge( points, temp->m[0][index],
 		temp->m[1][index],
 		temp->m[2][index],
 		temp->m[0][index] + 1,
 		temp->m[1][index] + 1,
 		temp->m[2][index] );
+      */
+
+      add_polygon( points, 
+		   temp->m[0][index],
+		   temp->m[1][index],
+		   temp->m[2][index],
+
+		   temp->m[0][index+1],
+		   temp->m[1][index+1],
+		   temp->m[2][index+1],
+
+		   temp->m[0][index+num_steps+1],
+		   temp->m[1][index+num_steps+1],
+		   temp->m[2][index+num_steps+1]
+		   );
+
+      add_polygon( points, 
+		   temp->m[0][index],
+		   temp->m[1][index],
+		   temp->m[2][index],
+
+		   temp->m[0][index+num_steps+1],
+		   temp->m[1][index+num_steps+1],
+		   temp->m[2][index+num_steps+1],
+
+		   temp->m[0][index+num_steps],
+		   temp->m[1][index+num_steps],
+		   temp->m[2][index+num_steps]
+		   );
+      
     }//end points only
   }
   free_matrix(temp);
@@ -231,7 +283,6 @@ void generate_torus( struct matrix * points,
   double circStop = MAX_STEPS;
 
   for ( rotation = rotStart; rotation < rotStop; rotation += step ) {
-
     rot = (double)rotation / MAX_STEPS;
     for ( circle = circStart; circle < circStop; circle+= step ) {
 
@@ -272,6 +323,7 @@ void add_box( struct matrix * points,
   y2 = y - height;
   z2 = z - depth;
 
+  /*
   add_edge( points, 
 	    x, y, z, 
 	    x, y, z );
@@ -296,6 +348,68 @@ void add_box( struct matrix * points,
   add_edge( points, 
 	    x2, y2, z2, 
 	    x2, y2, z2 );
+  */
+
+  /*
+    A = x, y, z
+    B = x2, y, z
+    C = x2, y2, z
+    D = x, y2, z
+    E = x, y2, z2
+    F = x, y, z2,
+    G = x2, y, z2,
+    H = x2, y2, z2
+   */
+  
+  //ADC
+  add_polygon( points,
+		x, y, z,
+		x, y2, z,
+		x2, y2, z );
+
+  //ABC
+  add_polygon( points,
+		x2, y2, z,
+		x2, y, z,
+		x, y, z );
+
+  //AFD
+  add_polygon( points,
+	       x, y, z,
+	       x, y, z2,
+	       x, y2, z );
+
+  //DFE
+  add_polygon( points,
+	       x, y2, z,
+	       x, y, z2,
+	       x, y2, z2 );
+  
+  //EGH
+  add_polygon( points,
+	       x, y2, z2,
+	       x2, y, z2,
+	       x2, y2, z2 );
+
+  //EFG
+  add_polygon( points,
+	       x, y2, z2,
+	       x, y, z2,
+	       x2, y, z2 );
+
+  //HBC
+  add_polygon( points,
+	       x2, y2, z2,
+	       x2, y, z,
+	       x2, y2, z );
+
+  //HGB
+  add_polygon( points,
+	       x2, y2, z2,
+	       x2, y, z2,
+	       x2, y, z );
+
+  
 }
   
 /*======== void add_circle() ==========
@@ -444,9 +558,9 @@ to the screen
 void draw_lines( struct matrix * points, screen s, color c) {
 
   int i;
- 
+
   if ( points->lastcol < 2 ) {
-    
+
     printf("Need at least 2 points to draw a line!\n");
     return;
   }
@@ -455,8 +569,9 @@ void draw_lines( struct matrix * points, screen s, color c) {
 
     draw_line( points->m[0][i], points->m[1][i], 
 	       points->m[0][i+1], points->m[1][i+1], s, c);
+
     //FOR DEMONSTRATION PURPOSES ONLY
-    //draw extra pixels so points can actually be seen    
+    //draw extra pixels so points can actually be seen
     /*
     draw_line( points->m[0][i]+1, points->m[1][i], 
 	       points->m[0][i+1]+1, points->m[1][i+1], s, c);
@@ -583,5 +698,38 @@ void draw_line(int x0, int y0, int x1, int y1, screen s, color c) {
       }
     }
   }
+}
+
+
+//=================================================================helper functions======================================================================
+
+/* do_i_draw_it
+ * parameters: (x0,y0,z0) (x1,y1,z1) and (x2,y2,z2) are points P0 P1 P2 respectively
+ * return: returns 1 if polygon of P0 P1 P2 is facing you, 0 if not
+ * Backface culling method 
+ */
+int do_i_draw_it(double x0, double y0, double z0,
+		 double x1, double y1, double z1,
+		 double x2, double y2, double z2,
+		 double view_x, double view_y, double view_z) {
+
+  double v0_x, v0_y, v0_z; //vector_0 coordinates
+  double v1_x, v1_y, v1_z; //vector_1 coordinates
+  double surface_normal[3];
+  double view_vector[3];
+  
+  //set vector_0, P0 to P1
+  v0_x = x1 - x0;
+  v0_y = y1 - y0;
+  v0_z = z1 - z0;
+
+  //set vector_1 P0 to P2
+  v1_x = x2 - x0;
+  v1_y = y2 - y0;
+  v2_z = z2 - z0;
+
+  //compute cross product
+
+  
 }
 

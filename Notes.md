@@ -488,3 +488,12 @@ Sphere (case 2)
 
 _N_ is cross product of two vectors that share a common endpoint and go in different directions;
  only works if points are counter clockwise; 3 points determine 2 vectors
+
+cos(theta) (if between 90 and 270) is negative; magnitude is always positive;
+ therefore the sign of the dot product of the Surface Normal vector and View 
+ vector determines whether the surface is visable or not
+
+_If dot(N, V) < 0 then surface is drawn_
+
+
+
