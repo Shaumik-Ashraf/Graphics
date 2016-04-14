@@ -518,3 +518,21 @@ Some objects need to be transformed independent of each other, while some
    * Multiply points by the stack top
    * Draw the object to the screen
    * Clear the point matrix
+
+|Command          |Stack (top/btm)     |Image                           |
+|:---------------:|:------------------:|:------------------------------:|
+|                 | Identity Mat       | starting image, origin         |
+| push            | I/I                | same image, copy               |
+| translate x y z | T_0*I/I            | translated origin              |
+| box x y z w d h | T_0*I/I            | box around origin              |
+| push            | T_0*I/T_0*I/I      | pushed "copy" of image         |
+| translate x y z | T_1*T_0*I/T_0*I/I  | box in pos, origin translated  |
+
+
+_Pop from stack for independence of objects/coordinate systems_
+
+_You do NOT push objects onto a stack, only coordinate systems_
+
+_Push to have an independent object but relative to previous_
+
+
