@@ -82,7 +82,10 @@ void parse_file ( char * filename,
   struct matrix * tmp;
   double angle;
   color g;
+  struct stack* shakestack;  //relative coordinate system stack
 
+  shakestack = new_stack();
+  
   g.red = 0;
   g.green = 255;
   g.blue = 0;
@@ -98,7 +101,7 @@ void parse_file ( char * filename,
     line[strlen(line)-1]='\0';
     //printf(":%s:\n",line);
     double x, y, z, x1, y1, z1, x2, y2, z2, x3, y3, z3, x4, y4, z4;
-   
+    
     
     if ( strncmp(line, "line", strlen(line)) == 0 ) {
       //      printf("LINE!\n");
@@ -156,8 +159,9 @@ void parse_file ( char * filename,
       //line[strlen(line)-1]='\0';      
       sscanf(line, "%lf %lf %lf", &x, &y, &z);
       tmp = make_scale(x, y, z);
-      matrix_mult(tmp, transform);
+      //matrix_mult(tmp, transform);
       //print_matrix(transform);
+      matrix_mult(tmp, shakestack->data[ shakestack->top ]);
     }
     else if ( strncmp(line, "translate", strlen(line)) == 0 ) {
       //printf("TRANSLATE\n");
@@ -165,8 +169,9 @@ void parse_file ( char * filename,
       //      line[strlen(line)-1]='\0';      
       sscanf(line, "%lf %lf %lf", &x, &y, &z);
       tmp = make_translate(x, y, z);
-      matrix_mult(tmp, transform);
+      //matrix_mult(tmp, transform);
       //print_matrix(transform);
+      matrix_mult(tmp, shakestack->data[ shakestack->top ]);
     }
     else if ( strncmp(line, "xrotate", strlen(line)) == 0 ) {
       //printf("ROTATE!\n");
@@ -174,7 +179,8 @@ void parse_file ( char * filename,
       sscanf(line, "%lf", &angle);
       angle = angle * (M_PI / 180);
       tmp = make_rotX( angle);
-      matrix_mult(tmp, transform);
+      //matrix_mult(tmp, transform);
+      matrix_mult(tmp, shakestack->data[ shakestack->top ]);
     }
     else if ( strncmp(line, "yrotate", strlen(line)) == 0 ) {
       //printf("ROTATE!\n");
@@ -182,7 +188,8 @@ void parse_file ( char * filename,
       sscanf(line, "%lf", &angle);
       angle = angle * (M_PI / 180);
       tmp = make_rotY( angle);
-      matrix_mult(tmp, transform);
+      //matrix_mult(tmp, transform);
+      matrix_mult(tmp, shakestack->data[ shakestack->top ]);
     }
     else if ( strncmp(line, "zrotate", strlen(line)) == 0 ) {
       //printf("ROTATE!\n");
@@ -190,7 +197,8 @@ void parse_file ( char * filename,
       sscanf(line, "%lf", &angle);
       angle = angle * (M_PI / 180);
       tmp = make_rotZ( angle);
-      matrix_mult(tmp, transform);
+      //matrix_mult(tmp, transform);
+      matrix_mult(tmp, shakestack->data[ shakestack->top ]);
     }
     else if ( strncmp(line, "ident", strlen(line)) == 0 ) {
       ident(transform);
@@ -218,6 +226,15 @@ void parse_file ( char * filename,
     }
     else if ( strncmp(line, "quit", strlen(line)) == 0 ) {
       return;
+    }
+    //==================STACK COMMANDS=================================
+    else if( strncmp(line, "push", strlen(line)) == 0 ) {
+      push(shakestack);
+      print_stack(shakestack);
+    }
+    else if( strncmp(line, "pop", strlen(line)) == 0 ) {
+      pop(shakestack);
+      print_stack(shakestack);
     }
     else if ( line[0] != '#' ) {
       printf("Invalid command\n");
