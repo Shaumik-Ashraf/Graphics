@@ -1,4 +1,4 @@
-OBJECTS= main.o draw.o display.o matrix.o parser.o gmath.o
+OBJECTS= main.o draw.o display.o matrix.o parser.o gmath.o stack.o
 CFLAGS= -Wall -g
 LDFLAGS= -lm
 CC= gcc
@@ -24,5 +24,9 @@ parser.o: parser.c parser.h matrix.h draw.h display.h ml6.h
 gmath.o: gmath.c gmath.h matrix.h
 	$(CC) $(CFLAGS) -c gmath.c
 
+stack.o: stack.c stack.h matrix.h
+	$(CC) $(FLAGS) -c stack.c
+
 clean:
+	touch t.o t~
 	rm *.o *~
