@@ -59,7 +59,7 @@ apply
 clear
 torus
 0 0 25 150
-display
+#display
 #rotate 90 degrees about y to check lines
 ident
 yrotate
