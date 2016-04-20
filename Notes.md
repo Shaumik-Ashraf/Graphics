@@ -535,4 +535,34 @@ _You do NOT push objects onto a stack, only coordinate systems_
 
 _Push to have an independent object but relative to previous_
 
+##4/19/16
 
+####Compilers
+
+Source Code -> Preprocessor/Linker -> Compiler -> Machine Code
+
+Compile
+ - Lexer
+ - Parser
+ - Semantic Analyzer
+ - Optimizer (Some languages skip)
+ - Code Generator
+
+Lexer
+ - Preforms Lexical Analysis
+ - Knows all the valid tokens (keywords, numbers, punctuation, valid symbols)
+ - Generates a list of tokens
+ - Removes whitespace and comments
+ - Catches "Not a valid token" and "Invalid Identifier" errors
+
+Parser
+ - Performs Syntax Analysis
+ - knows grammer of the language (well defined)
+ - outputs a syntax tree, which represents functional structure
+ - removes all formatting characters i.e: '(', ')', ';', '{', etc.
+ 
+
+Code Generator
+ - create machine code
+ - da 1s and 0s
+ 
