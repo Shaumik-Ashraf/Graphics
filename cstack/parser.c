@@ -220,7 +220,7 @@ void parse_file ( char * filename,
     else if ( strncmp(line, "display", strlen(line)) == 0 ) {
       clear_screen(s);
 	  if( draw_mode==0 ) {
-		draw_edges(pm, s, g);
+		draw_lines(pm, s, g);
 	  }
 	  else {
 		draw_polygons(pm, s, g);
@@ -232,7 +232,7 @@ void parse_file ( char * filename,
       // line[strlen(line)-1] = '\0';
       clear_screen(s);
       if( draw_mode==0 ) {
-		draw_edges(pm, s, g);
+		draw_lines(pm, s, g);
 	  }
 	  else {
 		draw_polygons(pm, s, g);
