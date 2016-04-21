@@ -215,7 +215,8 @@ void parse_file ( char * filename,
       //printf("APPLY!\n");
       //print_matrix( transform );
       //      print_matrix(pm);
-      matrix_mult(transform, pm);
+      //matrix_mult(transform, pm);
+	  matrix_mult(shakestack->data[ shakestack->top ], pm);
     }
     else if ( strncmp(line, "display", strlen(line)) == 0 ) {
       clear_screen(s);
