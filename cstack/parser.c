@@ -255,10 +255,24 @@ void parse_file ( char * filename,
       pop(shakestack);
       print_stack(shakestack);
     }
-    else if ( line[0] != '#' ) {
+    else if ( line[0] == '#' ) {
       printf("Invalid command\n");
     }
-	else;
+    //adding color coommand==================
+    else if( strncmp(line, "color", strlen(line)) == 0 ) {
+    	
+    	fgets(line, 255, f);
+    	sscanf(line, "%i %i %i", &x, &y, &z);
+    	
+   		g.red = x;
+   		g.green = y;
+   		g.blue = z;
+   		
+    }
+	else {
+		  printf("Invalid command\n");
+    
+	}
   }
   
   free_matrix(tmp);

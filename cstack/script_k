@@ -1,0 +1,30 @@
+push
+translate
+250 250 0
+#set color to brown, start body
+color
+130 90 43
+sphere
+0 0 150
+apply
+#set color to yellow, start eyes
+color
+250 250 0
+push
+translate
+75 75 125
+sphere
+0 0 25
+apply
+pop
+push
+translate
+-75 -75 125
+sphere
+0 0 25
+apply
+pop
+save
+k.png
+quit
+
