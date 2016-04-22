@@ -7,6 +7,7 @@ color
 sphere
 0 0 150
 apply
+display
 #set color to yellow, start eyes
 color
 250 250 0
@@ -16,6 +17,7 @@ translate
 sphere
 0 0 25
 apply
+display
 pop
 push
 translate
@@ -23,8 +25,9 @@ translate
 sphere
 0 0 25
 apply
+display
 pop
-save
-k.png
+#save
+#k.png
 quit
 

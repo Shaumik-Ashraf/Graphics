@@ -561,8 +561,34 @@ Parser
  - outputs a syntax tree, which represents functional structure
  - removes all formatting characters i.e: '(', ')', ';', '{', etc.
  
+Semantic Analyzer
+ - Semantics Vs Syntax: semantics incorporate meaning
+ - A sentence may be syntaxically correct but semantically incorrect
+ - Knows how to identify variables and values
+ - Knows what tokens map to computer operations
+ - Generates Symbol Table (all Identifies in code)
+ - Generates a list of operations in order
+ - DOES NOT DO ANY ACTUAL WORK, JUST MAKES LISTS
+
+Optimizer
+ - gets real complicated real fast
+ - ex1: do things like look thru symbol table and remove unused symbols
+ - ex2: recognizing patterns in code and redoing it entirely
+ - outputs optimized symbol table and operations list
 
 Code Generator
+ - input: symbol table and operations list
+ - knows what operations map to what processor instructions
  - create machine code
  - da 1s and 0s
- 
+
+##4/21/16
+
+Compiler tools
+ - lex (the lexer, requires a token definition)
+ - flex (free opensource lex)
+ - yacc (yet another compiler compiler, parser and semantic analyzer combines, requires grammar definition)
+ - bison (free opensouce yacc)
+ -
+
+
