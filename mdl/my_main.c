@@ -67,6 +67,37 @@ void my_main( int polygons ) {
 
   for (i=0;i<lastop;i++) {  
     switch (op[i].opcode) {
+	case COMMENT:
+		//ignore
+		break;
+	case PUSH:
+		push(s); //check
+		break;
+	case POP:
+		pop(s); //check
+		break;
+	case MOVE:
+		
+		break;
+	case SCALE:
+		break;
+	case ROTATE:
+		break;
+	case BOX:
+		break;
+	case SPHERE:
+		break;
+	case TORUS:
+		break;
+	case LINE:
+		break;
+	case SAVE:
+		break;
+	case DISPLAY:
+		break;
+	default:
+		fprintf(stdout, "Unrecognized opcode...\n");
+		break;
     }
   }
 }
