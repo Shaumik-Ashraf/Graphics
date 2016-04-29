@@ -77,11 +77,24 @@ void my_main( int polygons ) {
 		pop(s); //check
 		break;
 	case MOVE:
-		
+		xval = op[i].op.move.d[0];
+		yval = op[i].op.move.d[1];
+		zval = op[i].op.move.d[2];
+		tmp = make_translate(xval, yval, zval);
+		matrix_mult(tmp, s->data[s->top]);
+		free_matrix(tmp);
 		break;
 	case SCALE:
+		xval = op[i].op.scale.d[0];
+		yval = op[i].op.scale.d[1];
+		zval = op[i].op.scale.d[2];
+		tmp = make_scale(xval, yval, zval);
+		matrix_mult(tmp, s->data[s->top]);
+		free_matrix(tmp);
 		break;
 	case ROTATE:
+		xval = op[i].op.rotate.degrees;
+		//CONTINUE
 		break;
 	case BOX:
 		break;
