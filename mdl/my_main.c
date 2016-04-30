@@ -67,7 +67,7 @@ void my_main( int polygons ) {
   clear_screen( t );
 
   for (i=0;i<lastop;i++) {  
-    switch (op[i].opcode) 
+    switch (op[i].opcode) {
 	case COMMENT:
 		//ignore
 		break;
@@ -155,6 +155,7 @@ void my_main( int polygons ) {
 	default:
 		fprintf(stdout, "Unrecognized opcode...\n");
 		break;
-    }
-  }
-}
+    } //close switch
+  } //close for-loop
+
+} //close func
