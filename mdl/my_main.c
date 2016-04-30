@@ -118,18 +118,39 @@ void my_main( int polygons ) {
 		add_box(tmp, xval, yval, zval, tp[0], tp[1], tp[2]);
 		matrix_mult(s->data[s->top], tmp);
 		draw_polygons(tmp, t, g);
+		tmp->lastcol = 0;
 		break;
 	case SPHERE:
 		tp = op[i].op.sphere.d;
-		generate_sphere
+		xval = op[i].op.sphere.r;
+		add_sphere(tmp, tp[0], tp[1], tp[2], xval);
+		matrix_mult(s->data[s->top], tmp);
+		draw_polygons(tmp, t, g);
+		tmp->lastcol = 0;
 		break;
 	case TORUS:
+		tp = op[i].op.torus.d;
+		xval = op[i].op.torus.r0;
+		yval = op[i].op.torus.r1;
+		add_torus(tmp, d[0], d[1], d[2], xval, yval);
+		matrix_mult(s->data[s->top], tmp);
+		draw_polygons(tmp, t, g);
+		tmp->lastcol = 0;
 		break;
 	case LINE:
+		tp = op[i].op.line.p0;
+		xval = op[i].op.line.p1[0];
+		yval = op[i].op.line.p1[1];
+		zval = op[i].op.line.p1[2];
+		add_edge(tmp, tp[0], tp[1], tp[2], xval, yval, zval);
+		draw_lines(tmp, t, g);
+		tmp->lastcol = 0;
 		break;
 	case SAVE:
+		save_extension(t, op[i].op.save.p->name);
 		break;
 	case DISPLAY:
+		display(t);
 		break;
 	default:
 		fprintf(stdout, "Unrecognized opcode...\n");
