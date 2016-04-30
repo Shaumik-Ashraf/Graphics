@@ -53,7 +53,7 @@
 void my_main( int polygons ) {
 
   int i;
-  double step;
+  double step = 10;  //default steps
   double xval, yval, zval;
   struct matrix *transform;
   struct matrix *tmp;
@@ -95,7 +95,7 @@ void my_main( int polygons ) {
 		break;
 	case ROTATE:
 		xval = op[i].op.rotate.degrees;
-		switch( op[i].op.rotate.axis ) {
+		switch( (int)op[i].op.rotate.axis /*should be 0, 1, or 2*/ ) {
 			case 0: //x-axis
 				transform = make_rotX(xval);
 				break;
@@ -123,7 +123,7 @@ void my_main( int polygons ) {
 	case SPHERE:
 		tp = op[i].op.sphere.d;
 		xval = op[i].op.sphere.r;
-		add_sphere(tmp, tp[0], tp[1], tp[2], xval);
+		add_sphere(tmp, tp[0], tp[1], tp[2], xval, step);
 		matrix_mult(s->data[s->top], tmp);
 		draw_polygons(tmp, t, g);
 		tmp->lastcol = 0;
@@ -132,7 +132,7 @@ void my_main( int polygons ) {
 		tp = op[i].op.torus.d;
 		xval = op[i].op.torus.r0;
 		yval = op[i].op.torus.r1;
-		add_torus(tmp, d[0], d[1], d[2], xval, yval);
+		add_torus(tmp, d[0], d[1], d[2], xval, yval, step);
 		matrix_mult(s->data[s->top], tmp);
 		draw_polygons(tmp, t, g);
 		tmp->lastcol = 0;
