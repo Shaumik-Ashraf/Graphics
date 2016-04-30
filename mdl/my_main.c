@@ -132,7 +132,7 @@ void my_main( int polygons ) {
 		tp = op[i].op.torus.d;
 		xval = op[i].op.torus.r0;
 		yval = op[i].op.torus.r1;
-		add_torus(tmp, d[0], d[1], d[2], xval, yval, step);
+		add_torus(tmp, tp[0], tp[1], tp[2], xval, yval, step);
 		matrix_mult(s->data[s->top], tmp);
 		draw_polygons(tmp, t, g);
 		tmp->lastcol = 0;
