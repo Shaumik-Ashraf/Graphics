@@ -591,4 +591,30 @@ Compiler tools
  - bison (free opensouce yacc)
  -
 
+##3/5/16
+####Animation
 
+lets say we have an image of a ball, and we want to preform the following
+animation:
+
+move 400 0 0  _this is known as the factor, which in named variable used by vary_        
+
+then we actually do:
+
+|Frame | Command            | Doorknob |
+|:----:|:------------------:|:--------:|
+|0     | move 400 0 0       |  0%      |
+|1     | move 400 0 0       |  25%     |
+|2     | move 400 0 0       |  50%     |
+|3     | move 400 0 0       |  75%     |
+|4     | move 400 0 0       |  100%    |
+
+Percentages are called knobs because the increase/turn like a doorknob
+
+"Everyone else's goes to 10, ours goes to 11"
+
+####New mdl commands
+ - frames(n) -> set the number of frames in an animation
+ - basename(s) -> set the prefix for all frame filenames
+ - vary(knob, starting_frame, ending_frame, start_value, end_value) -> describe how knob changes over time
+ 
