@@ -591,7 +591,7 @@ Compiler tools
  - bison (free opensouce yacc)
  -
 
-##3/5/16
+##5/3/16 - 
 ####Animation
 
 lets say we have an image of a ball, and we want to preform the following
@@ -617,4 +617,22 @@ Percentages are called knobs because the increase/turn like a doorknob
  - frames(n) -> set the number of frames in an animation
  - basename(s) -> set the prefix for all frame filenames
  - vary(knob, starting_frame, ending_frame, start_value, end_value) -> describe how knob changes over time
- 
+
+######Pass I
+ - Look for and verify the animation commands: frames, basename, vary
+ - If there are errors, display messafe, and exit
+ - Set the number of frames
+ - Set the basename (if not found, set default and alert user)
+
+######Pass II
+ - Generate and show the knob values
+ - create an array/list where each index represents a frame and stores a list of knob values for that frame
+ - array of lists, where each list node contains a vary command and each index of the array represents a frame
+
+######Pass III
+ - Drawing phase
+ - If no animation code, draw the image normally
+ - If there is animation code, for each frame:
+   * Set symbol table values for each knob based on the array from pass II
+   * Go through the drawing commands and apply knobs as needed
+   * save the image as baseframe + frame#
