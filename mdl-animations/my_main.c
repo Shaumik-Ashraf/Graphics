@@ -126,6 +126,10 @@ void first_pass() {
     strcpy(name, "nemo");
   }
 
+  if( !found_frames ) {
+    printf("Warning: no frames specifies; assumine image (1 frame)\n");
+    num_frames = 1;
+  }
   
 }
 
@@ -152,13 +156,38 @@ void first_pass() {
   jdyrlandweaver
   ====================*/
 struct vary_node ** second_pass() {
+
+  extern int num_frames;
   
-  int i;
+  int i, j, start, end;
+  struct vary_node** ret;
 
+  ret = (struct vary_node**)malloc(sizeof(struct vary_node*) * num_frames);
+  if( ret==NULL ) { printf("Error, Memory Error\n"); exit(1); }
+
+  for(i=0; i<num_frames; i++) {
+    if( (ret[i]=(struct vary_node*)malloc(sizeof(struct vary_node)))==NULL ) {
+      printf("Error, Memory Error\n"); exit(1);
+    }
+    ret[i]->next = NULL;
+  }
+  
   for(i=0; i<lastop; i++) {
-    switch(op[i].opcode) {
+    if( op[i].opcode == VARY ) {
+      start = op[i].op.vary.start_frame;
+      end = op[i].op.vary.end_frame;
+      for(j=start; j<end; j++) {
+	struct vary_node* nav = ret[j];
 
+	while( nav->next != NULL ) { nav = nav->next; }
 
+	if( (nav=(struct vary_node*)malloc(sizeof(struct vary_node)))==NULL ) {
+	  printf("Error, Memory Error\n"); exit(1);
+	}
+	strncpy(nav->name, op[i].op.vary.p->name, 128);
+	nav->value = ;//DERIVE FORMULA!!!!!!!!!!
+	nav->next = NULL;
+      }
     }
   }
 
@@ -196,7 +225,7 @@ void print_knobs() {
   Returns: 
 
   This is the main engine of the interpreter, it should
-  handle most of the commadns in mdl.
+  handle most of the commands in mdl.
 
   If frames is not present in the source (and therefore 
   num_frames is 1, then process_knobs should be called.
