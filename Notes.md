@@ -635,4 +635,12 @@ Percentages are called knobs because the increase/turn like a doorknob
  - If there is animation code, for each frame:
    * Set symbol table values for each knob based on the array from pass II
    * Go through the drawing commands and apply knobs as needed
-   * save the image as baseframe + frame#
+   * save the image as basename + frame#
+
+##5/12/16
+
+####Scanline conversion
+ - "fill in shape" algorithm (generating solids, as opposed to mesh)
+ - draw a series of horizontal lines within a polygon
+ - draw lines from (x_0,y_0) of line AB to (x_1,y_0) of line AC or line CB
+ 

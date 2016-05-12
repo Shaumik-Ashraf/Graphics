@@ -265,16 +265,24 @@ void my_main( int polygons ) {
   struct vary_node *vn;
   char frame_name[128];
 
-  num_frames = 1;
+  //num_frames = 1;
   step = 5;
  
   g.red = 0;
   g.green = 255;
   g.blue = 255;
 
+  first_pass();
+  knobs = second_pass();
+
+  print_knobs();
+
+  if( num_frames!=1 ) { //if animation
     
+  }
+  else { //else drawing only picture
     for (i=0;i<lastop;i++) {
-  
+      
       switch (op[i].opcode) {
 
       case SPHERE:
@@ -381,7 +389,7 @@ void my_main( int polygons ) {
 	break;
       }
     }
-  
+  }
     free_stack( s );
     free_matrix( tmp );
     //free_matrix( transform );
