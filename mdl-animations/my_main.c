@@ -278,7 +278,13 @@ void my_main( int polygons ) {
   print_knobs();
 
   if( num_frames!=1 ) { //if animation
-    
+    for( j=0; j<num_frames; j++) {
+      //create coord-sys stack based on knobs linkedlist array
+      
+      //iterate through opcode and draw
+
+      //save frame
+    }
   }
   else { //else drawing only picture
     for (i=0;i<lastop;i++) {
