@@ -22,10 +22,20 @@
 #define CHUNK_IDAT 1
 #define CHUNK_END 2
 
+struct png_chunk {
+	int type;
+	unsigned int len;  //size of data
+	void* data;
+	unsigned int crc;  //checksum
+}
 
-struct png_chunk
+const char** CHUNK_NAMES {
+	{'I', 'H', 'D', 'R'},
+	{'I', 'D', 'A', 'T'},
+	{'I', 'E', 'N', 'D'}
+}
 
-
-
+extern struct png_chunk* new_chunk(int chunk_type, screen s);
+extern void save_png(char* filename, screen s);
 
 #endif
