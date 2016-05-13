@@ -99,7 +99,7 @@ void first_pass() {
 	break;
       }
       found_frames = 1;
-      num_frames = op[i].frames.num_frames;
+      num_frames = op[i].op.frames.num_frames;
       break;
     case BASENAME:
       if( found_basenam ) {
@@ -107,7 +107,7 @@ void first_pass() {
 	break;
       }
       found_basenam = 1;
-      strncpy(name, op[i].basename.p->name, 128);
+      strncpy(name, op[i].op.basename.p->name, 128);
       break;
     case VARY:
       found_vary = 1;
@@ -159,17 +159,14 @@ struct vary_node ** second_pass() {
 
   extern int num_frames;
   
-  int i, j, start, end;
+  int i, j, start, end, x, y;
   struct vary_node** ret;
 
   ret = (struct vary_node**)malloc(sizeof(struct vary_node*) * num_frames);
   if( ret==NULL ) { printf("Error, Memory Error\n"); exit(1); }
 
   for(i=0; i<num_frames; i++) {
-    if( (ret[i]=(struct vary_node*)malloc(sizeof(struct vary_node)))==NULL ) {
-      printf("Error, Memory Error\n"); exit(1);
-    }
-    ret[i]->next = NULL;
+    ret[i] = NULL;
   }
   
   for(i=0; i<lastop; i++) {
@@ -177,15 +174,25 @@ struct vary_node ** second_pass() {
       start = op[i].op.vary.start_frame;
       end = op[i].op.vary.end_frame;
       for(j=start; j<end; j++) {
-	struct vary_node* nav = ret[j];
 
+	if( ret[j]==NULL ) {
+	  ret[j]=(struct vary_node*)malloc(sizeof(struct vary_node));
+	  if( ret[j]==NULL ) {
+	    printf("Error, memory error\n"); exit(1);
+	  }
+	}
+	
+	struct vary_node* nav = ret[j];
+	
 	while( nav->next != NULL ) { nav = nav->next; }
 
 	if( (nav=(struct vary_node*)malloc(sizeof(struct vary_node)))==NULL ) {
 	  printf("Error, Memory Error\n"); exit(1);
 	}
 	strncpy(nav->name, op[i].op.vary.p->name, 128);
-	nav->value = ;//DERIVE FORMULA!!!!!!!!!!
+	x = op[i].op.vary.start_val;
+	y = op[i].op.vary.end_val;
+	nav->value = x + (int)((y-x)*((i-start)/(float)(end-start)));
 	nav->next = NULL;
       }
     }
@@ -278,17 +285,30 @@ void my_main( int polygons ) {
   print_knobs();
 
   if( num_frames!=1 ) { //if animation
+/*
+    if( num_frames > 9999 ) {
+      printf("Warning: max number of frames (9999) exceeded\n");
+    }
+    
     for( j=0; j<num_frames; j++) {
       //create coord-sys stack based on knobs linkedlist array
+      struct vary_node* nav = knobs[j];
+      while( nav!=NULL ) {
+	
+      }
       
       //iterate through opcode and draw
-
+      
+      
       //save frame
-    }
+      sprintf(frame_name, "%s%04d%s", name, j, ".png");
+      printf("Saving frame %s\n", frame_name);
+      save_extension(frame_name);
+    }*/
   }
   else { //else drawing only picture
     for (i=0;i<lastop;i++) {
-      
+
       switch (op[i].opcode) {
 
       case SPHERE:
