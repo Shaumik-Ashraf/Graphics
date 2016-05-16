@@ -171,32 +171,35 @@ struct vary_node ** second_pass() {
   
   for(i=0; i<lastop; i++) {
     if( op[i].opcode == VARY ) {
-      start = op[i].op.vary.start_frame;
-      end = op[i].op.vary.end_frame;
-      for(j=start; j<end; j++) {
-
-	if( ret[j]==NULL ) {
-	  ret[j]=(struct vary_node*)malloc(sizeof(struct vary_node));
-	  if( ret[j]==NULL ) {
-	    printf("Error, memory error\n"); exit(1);
-	  }
-	}
+    	start = op[i].op.vary.start_frame;
+      	end = op[i].op.vary.end_frame;
+      	x = op[i].op.vary.start_val;
+		y = op[i].op.vary.end_val;
 	
-	struct vary_node* nav = ret[j];
+      	for(j=start; j<end; j++) { //iterate thru array (frames)
+			
+			struct vary_node* nav = ret[j];
 	
-	while( nav->next != NULL ) { nav = nav->next; }
-
-	if( (nav=(struct vary_node*)malloc(sizeof(struct vary_node)))==NULL ) {
-	  printf("Error, Memory Error\n"); exit(1);
-	}
-	strncpy(nav->name, op[i].op.vary.p->name, 128);
-	x = op[i].op.vary.start_val;
-	y = op[i].op.vary.end_val;
-	nav->value = x + (int)((y-x)*((i-start)/(float)(end-start)));
-	nav->next = NULL;
-      }
-    }
-  }
+			if( nav==NULL ) { //if first node of list
+				ret[j]=(struct vary_node*)malloc(sizeof(struct vary_node));
+				if( ret[j]==NULL ) { printf("Error, memory error\n"); exit(1); }
+			}
+			else {
+				while( nav->next != NULL ) { nav = nav->next; }
+				nav->next = (struct vary_node*)malloc(sizeof(struct vary_node));
+				if( (nav->next)==NULL ) { printf("Error, memory error\n"); exit(1); }
+				nav = nav->next;
+			}
+			
+			//nav is now at allocated "empty" vary_node
+			strncpy(nav->name, op[i].op.vary.p->name, 128);
+			
+			nav->value = x + (int)((y-x)*((j-start)/(float)(end-start)));
+			nav->next = NULL;
+      } //close nested for-loop
+      
+    } //close if VARY
+  } //close for-loop
 
 }
 
