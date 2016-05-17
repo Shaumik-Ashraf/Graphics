@@ -158,6 +158,7 @@ void first_pass() {
 struct vary_node ** second_pass() {
 
   extern int num_frames;
+  extern struct vary_node* nav;
   
   int i, j, start, end, x, y;
   struct vary_node** ret;
@@ -177,13 +178,15 @@ struct vary_node ** second_pass() {
 		y = op[i].op.vary.end_val;
 	
       	for(j=start; j<end; j++) { //iterate thru array (frames)
-			struct vary_node* nav = ret[j];
-	
-			if( nav==NULL ) { //if first node of list
+			struct vary_node* nav;
+			
+			if( ret[j]==NULL ) { //if first node of list
 				ret[j]=(struct vary_node*)malloc(sizeof(struct vary_node));
 				if( ret[j]==NULL ) { printf("Error, memory error\n"); exit(1); }
+				else nav = ret[j];
 			}
 			else {
+				nav = ret[j];
 				while( nav->next != NULL ) { nav = nav->next; }
 				nav->next = (struct vary_node*)malloc(sizeof(struct vary_node));
 				if( (nav->next)==NULL ) { printf("Error, memory error\n"); exit(1); }
@@ -192,9 +195,10 @@ struct vary_node ** second_pass() {
 			
 			//nav is now at allocated "empty" vary_node
 			
-			strncpy(nav->name, op[i].op.vary.p->name, 128);
+			strcpy(nav->name, op[i].op.vary.p->name);
 			nav->value = x + (int)((y-x)*((j-start)/(float)(end-start)));
 			nav->next = NULL;
+	//*/
       } //close nested for-loop
       
     } //close if VARY
@@ -282,18 +286,21 @@ void my_main( int polygons ) {
   g.blue = 255;
 
   first_pass();
+  printf("first pass complete.\n");
   knobs = second_pass();
+  printf("second pass complete.\n");
 
   print_knobs();
 
   if( num_frames!=1 ) { //if animation
-
+	printf("Processing animation...\n");
+	
     if( num_frames > 9999 ) {
       printf("Warning: max number of frames (9999) exceeded\n");
     }
 
     for( j=0; j<num_frames; j++) {
-      
+    	printf("drawing frame %i... ", j);  
 		for (i=0;i<lastop;i++) {
 		  vn = knobs[j];
 		  switch (op[i].opcode) {
@@ -369,7 +376,7 @@ void my_main( int polygons ) {
 			//check if its a "variable"
 			if( op[i].op.scale.p!=NULL ) { //if vary'd search list for name and apply if there
 				while( vn!=NULL ) {
-					if( strcmp(op[i].op.scale.p->name, nv->name)==0 ) {
+					if( strcmp(op[i].op.scale.p->name, vn->name)==0 ) {
 						matrix_mult( s->data[ s->top ], transform );
 						copy_matrix( transform, s->data[ s->top ] );
 						break;
@@ -400,7 +407,7 @@ void my_main( int polygons ) {
 			//check if its a "variable"
 			if( op[i].op.rotate.p!=NULL ) { //if vary'd search list for name and apply if there
 				while( vn!=NULL ) {
-					if( strcmp(op[i].op.rotate.p->name, nv->name)==0 ) {
+					if( strcmp(op[i].op.rotate.p->name, vn->name)==0 ) {
 						matrix_mult( s->data[ s->top ], transform );
 						copy_matrix( transform, s->data[ s->top ] );
 						break;
