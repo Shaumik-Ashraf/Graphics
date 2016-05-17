@@ -637,7 +637,7 @@ Percentages are called knobs because the increase/turn like a doorknob
    * Go through the drawing commands and apply knobs as needed
    * save the image as basename + frame#
 
-##5/12/16
+##5/12/16 - 5/13/16
 
 ####Scanline conversion
  - "fill in shape" algorithm (generating solids, as opposed to mesh)

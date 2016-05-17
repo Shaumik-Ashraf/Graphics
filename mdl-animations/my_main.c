@@ -15,7 +15,7 @@
   basename: set name (in misc_headers.h) for animation
 
   vary: manipluate knob values between two given frames
-        over a specified interval
+  over a specified interval
 
   set: set a knob to a given value
   
@@ -26,19 +26,19 @@
   pop: remove the top matrix on the origin stack
 
   move/scale/rotate: create a transformation matrix 
-                     based on the provided values, then 
-		     multiply the current top of the
-		     origins stack by it.
+  based on the provided values, then 
+  multiply the current top of the
+  origins stack by it.
 
   box/sphere/torus: create a solid object based on the
-                    provided values. Store that in a 
-		    temporary matrix, multiply it by the
-		    current top of the origins stack, then
-		    call draw_polygons.
+  provided values. Store that in a 
+  temporary matrix, multiply it by the
+  current top of the origins stack, then
+  call draw_polygons.
 
   line: create a line based on the provided values. Store 
-        that in a temporary matrix, multiply it by the
-	current top of the origins stack, then call draw_lines.
+  that in a temporary matrix, multiply it by the
+  current top of the origins stack, then call draw_lines.
 
   save: call save_extension with the provided filename
 
@@ -172,50 +172,51 @@ struct vary_node ** second_pass() {
   
   for(i=0; i<lastop; i++) {
     if( op[i].opcode == VARY ) {
-    	start = op[i].op.vary.start_frame;
-      	end = op[i].op.vary.end_frame;
-      	x = op[i].op.vary.start_val;
-		y = op[i].op.vary.end_val;
+      start = op[i].op.vary.start_frame;
+      end = op[i].op.vary.end_frame;
+      x = op[i].op.vary.start_val;
+      y = op[i].op.vary.end_val;
 	
-      	for(j=start; j<end; j++) { //iterate thru array (frames)
-			struct vary_node* nav;
+      for(j=start; j<end; j++) { //iterate thru array (frames)
+	struct vary_node* nav;
 			
-			if( ret[j]==NULL ) { //if first node of list
-				ret[j]=(struct vary_node*)malloc(sizeof(struct vary_node));
-				if( ret[j]==NULL ) { printf("Error, memory error\n"); exit(1); }
-				else nav = ret[j];
-			}
-			else {
-				nav = ret[j];
-				while( nav->next != NULL ) { nav = nav->next; }
-				nav->next = (struct vary_node*)malloc(sizeof(struct vary_node));
-				if( (nav->next)==NULL ) { printf("Error, memory error\n"); exit(1); }
-				nav = nav->next;
-			}
+	if( ret[j]==NULL ) { //if first node of list
+	  ret[j]=(struct vary_node*)malloc(sizeof(struct vary_node));
+	  if( ret[j]==NULL ) { printf("Error, memory error\n"); exit(1); }
+	  else nav = ret[j];
+	}
+	else {
+	  nav = ret[j];
+	  while( nav->next != NULL ) { nav = nav->next; }
+	  nav->next = (struct vary_node*)malloc(sizeof(struct vary_node));
+	  if( (nav->next)==NULL ) { printf("Error, memory error\n"); exit(1); }
+	  nav = nav->next;
+	}
 			
-			//nav is now at allocated "empty" vary_node
+	//nav is now at allocated "empty" vary_node
 			
-			strcpy(nav->name, op[i].op.vary.p->name);
-			nav->value = x + (int)((y-x)*((j-start)/(float)(end-start)));
-			nav->next = NULL;
+	strcpy(nav->name, op[i].op.vary.p->name);
+	nav->value = x + (int)((y-x)*((j-start)/(float)(end-start)));
+	nav->next = NULL;
 	//*/
       } //close nested for-loop
       
     } //close if VARY
   } //close for-loop
 
+  return( ret );
 }
 
 
 /*======== void print_knobs() ==========
-Inputs:   
-Returns: 
+  Inputs:   
+  Returns: 
 
-Goes through symtab and display all the knobs and their
-currnt values
+  Goes through symtab and display all the knobs and their
+  currnt values
 
-jdyrlandweaver
-====================*/
+  jdyrlandweaver
+  ====================*/
 void print_knobs() {
   
   int i;
@@ -293,157 +294,158 @@ void my_main( int polygons ) {
   print_knobs();
 
   if( num_frames!=1 ) { //if animation
-	printf("Processing animation...\n");
+    printf("Processing animation...\n");
 	
     if( num_frames > 9999 ) {
       printf("Warning: max number of frames (9999) exceeded\n");
     }
 
+    printf("looping:\n");
     for( j=0; j<num_frames; j++) {
-    	printf("drawing frame %i... ", j);  
-		for (i=0;i<lastop;i++) {
-		  vn = knobs[j];
-		  switch (op[i].opcode) {
+      printf("drawing frame %i... \n", j);  
+      for (i=0;i<lastop;i++) {
+	vn = knobs[j];
+	switch (op[i].opcode) {
 
-		  case SPHERE:
-			add_sphere( tmp,op[i].op.sphere.d[0], //cx
-					op[i].op.sphere.d[1],  //cy
-					op[i].op.sphere.d[2],  //cz
-					op[i].op.sphere.r,
-					step);
-			//apply the current top origin
-			matrix_mult( s->data[ s->top ], tmp );
-			draw_polygons( tmp, t, g );
-			tmp->lastcol = 0;
-			break;
+	case SPHERE:
+	  add_sphere( tmp,op[i].op.sphere.d[0], //cx
+		      op[i].op.sphere.d[1],  //cy
+		      op[i].op.sphere.d[2],  //cz
+		      op[i].op.sphere.r,
+		      step);
+	  //apply the current top origin
+	  matrix_mult( s->data[ s->top ], tmp );
+	  draw_polygons( tmp, t, g );
+	  tmp->lastcol = 0;
+	  break;
 
-		  case TORUS:
-			add_torus( tmp, op[i].op.torus.d[0], //cx
-				   op[i].op.torus.d[1],     //cy
-				   op[i].op.torus.d[2],    //cz
-				   op[i].op.torus.r0,
-				   op[i].op.torus.r1,
-				   step);
-			matrix_mult( s->data[ s->top ], tmp );
-			draw_polygons( tmp, t, g );
-			tmp->lastcol = 0;
-			break;
+	case TORUS:
+	  add_torus( tmp, op[i].op.torus.d[0], //cx
+		     op[i].op.torus.d[1],     //cy
+		     op[i].op.torus.d[2],    //cz
+		     op[i].op.torus.r0,
+		     op[i].op.torus.r1,
+		     step);
+	  matrix_mult( s->data[ s->top ], tmp );
+	  draw_polygons( tmp, t, g );
+	  tmp->lastcol = 0;
+	  break;
 
-		  case BOX:
-			add_box( tmp, op[i].op.box.d0[0],
-				 op[i].op.box.d0[1],
-				 op[i].op.box.d0[2],
-				 op[i].op.box.d1[0],
-				 op[i].op.box.d1[1],
-				 op[i].op.box.d1[2]);
-			matrix_mult( s->data[ s->top ], tmp );
-			draw_polygons( tmp, t, g );
-			tmp->lastcol = 0;
-			break;
+	case BOX:
+	  add_box( tmp, op[i].op.box.d0[0],
+		   op[i].op.box.d0[1],
+		   op[i].op.box.d0[2],
+		   op[i].op.box.d1[0],
+		   op[i].op.box.d1[1],
+		   op[i].op.box.d1[2]);
+	  matrix_mult( s->data[ s->top ], tmp );
+	  draw_polygons( tmp, t, g );
+	  tmp->lastcol = 0;
+	  break;
 
-		  case LINE:
-			add_edge( tmp, op[i].op.line.p0[0],
-				  op[i].op.line.p0[1],
-				  op[i].op.line.p0[1],
-				  op[i].op.line.p1[0],
-				  op[i].op.line.p1[1],
-				  op[i].op.line.p1[1]);
-			draw_lines( tmp, t, g );
-			tmp->lastcol = 0;
-			break;
+	case LINE:
+	  add_edge( tmp, op[i].op.line.p0[0],
+		    op[i].op.line.p0[1],
+		    op[i].op.line.p0[1],
+		    op[i].op.line.p1[0],
+		    op[i].op.line.p1[1],
+		    op[i].op.line.p1[1]);
+	  draw_lines( tmp, t, g );
+	  tmp->lastcol = 0;
+	  break;
 
-		  case MOVE:
-			//get the factors
-			xval = op[i].op.move.d[0];
-			yval =  op[i].op.move.d[1];
-			zval = op[i].op.move.d[2];
+	case MOVE:
+	  //get the factors
+	  xval = op[i].op.move.d[0];
+	  yval =  op[i].op.move.d[1];
+	  zval = op[i].op.move.d[2];
 			  
-			transform = make_translate( xval, yval, zval );
-			//multiply by the existing origin
-			matrix_mult( s->data[ s->top ], transform );
-			//put the new matrix on the top
-			copy_matrix( transform, s->data[ s->top ] );
-			free_matrix( transform );
-			break;
+	  transform = make_translate( xval, yval, zval );
+	  //multiply by the existing origin
+	  matrix_mult( s->data[ s->top ], transform );
+	  //put the new matrix on the top
+	  copy_matrix( transform, s->data[ s->top ] );
+	  free_matrix( transform );
+	  break;
 
-		  case SCALE:
-			xval = op[i].op.scale.d[0];
-			yval = op[i].op.scale.d[1];
-			zval = op[i].op.scale.d[2];
+	case SCALE:
+	  xval = op[i].op.scale.d[0];
+	  yval = op[i].op.scale.d[1];
+	  zval = op[i].op.scale.d[2];
 			
-			transform = make_scale( xval, yval, zval );
+	  transform = make_scale( xval, yval, zval );
 			
-			//check if its a "variable"
-			if( op[i].op.scale.p!=NULL ) { //if vary'd search list for name and apply if there
-				while( vn!=NULL ) {
-					if( strcmp(op[i].op.scale.p->name, vn->name)==0 ) {
-						matrix_mult( s->data[ s->top ], transform );
-						copy_matrix( transform, s->data[ s->top ] );
-						break;
-					}
-					else { vn = vn->next; }
-				}
-				vn = knobs[j];
-			}
-			else {
-				matrix_mult( s->data[ s->top ], transform );
-				//put the new matrix on the top
-				copy_matrix( transform, s->data[ s->top ] );
-			}
-			free_matrix( transform );
-			break;
+	  //check if its a "variable"
+	  if( op[i].op.scale.p!=NULL ) { //if vary'd search list for name and apply if there
+	    while( vn!=NULL ) {
+	      if( strcmp(op[i].op.scale.p->name, vn->name)==0 ) {
+		matrix_mult( s->data[ s->top ], transform );
+		copy_matrix( transform, s->data[ s->top ] );
+		break;
+	      }
+	      else { vn = vn->next; }
+	    }
+	    vn = knobs[j];
+	  }
+	  else {
+	    matrix_mult( s->data[ s->top ], transform );
+	    //put the new matrix on the top
+	    copy_matrix( transform, s->data[ s->top ] );
+	  }
+	  free_matrix( transform );
+	  break;
 
-		  case ROTATE:
-			xval = op[i].op.rotate.degrees * ( M_PI / 180 );
+	case ROTATE:
+	  xval = op[i].op.rotate.degrees * ( M_PI / 180 );
 
-			//get the axis
-			if ( op[i].op.rotate.axis == 0 ) 
-			  transform = make_rotX( xval );
-			else if ( op[i].op.rotate.axis == 1 ) 
-			  transform = make_rotY( xval );
-			else if ( op[i].op.rotate.axis == 2 ) 
-			  transform = make_rotZ( xval );
+	  //get the axis
+	  if ( op[i].op.rotate.axis == 0 ) 
+	    transform = make_rotX( xval );
+	  else if ( op[i].op.rotate.axis == 1 ) 
+	    transform = make_rotY( xval );
+	  else if ( op[i].op.rotate.axis == 2 ) 
+	    transform = make_rotZ( xval );
 
-			//check if its a "variable"
-			if( op[i].op.rotate.p!=NULL ) { //if vary'd search list for name and apply if there
-				while( vn!=NULL ) {
-					if( strcmp(op[i].op.rotate.p->name, vn->name)==0 ) {
-						matrix_mult( s->data[ s->top ], transform );
-						copy_matrix( transform, s->data[ s->top ] );
-						break;
-					}
-					else { vn = vn->next; }
-				}
-				vn = knobs[j];
-			}
-			else {
-				matrix_mult( s->data[ s->top ], transform );
-				//put the new matrix on the top
-				copy_matrix( transform, s->data[ s->top ] );
-			}
+	  //check if its a "variable"
+	  if( op[i].op.rotate.p!=NULL ) { //if vary'd search list for name and apply if there
+	    while( vn!=NULL ) {
+	      if( strcmp(op[i].op.rotate.p->name, vn->name)==0 ) {
+		matrix_mult( s->data[ s->top ], transform );
+		copy_matrix( transform, s->data[ s->top ] );
+		break;
+	      }
+	      else { vn = vn->next; }
+	    }
+	    vn = knobs[j];
+	  }
+	  else {
+	    matrix_mult( s->data[ s->top ], transform );
+	    //put the new matrix on the top
+	    copy_matrix( transform, s->data[ s->top ] );
+	  }
 			
-			free_matrix( transform );
-			break;
+	  free_matrix( transform );
+	  break;
 
-		  case PUSH:
-			push( s );
-			break;
-		  case POP:
-			pop( s );
-			break;
-		  case SAVE:
-			save_extension( t, op[i].op.save.p->name );
-			break;
-		  case DISPLAY:
-			display( t );
-			break;
-		} //close switch
-		} //close for-loop
+	case PUSH:
+	  push( s );
+	  break;
+	case POP:
+	  pop( s );
+	  break;
+	case SAVE:
+	  save_extension( t, op[i].op.save.p->name );
+	  break;
+	case DISPLAY:
+	  display( t );
+	  break;
+	} //close switch
+      } //close for-loop
 	
-		//save frame
-		sprintf(frame_name, "%s%04d%s", name, j, ".png");
-		printf("Saving frame %s\n", frame_name);
-		save_extension(t, frame_name);
+      //save frame
+      sprintf(frame_name, "%s%04d%s", name, j, ".png");
+      printf("Saving frame %s\n", frame_name);
+      save_extension(t, frame_name);
     }
 
   }
@@ -453,112 +455,112 @@ void my_main( int polygons ) {
       switch (op[i].opcode) {
 
       case SPHERE:
-		add_sphere( tmp,op[i].op.sphere.d[0], //cx
-				op[i].op.sphere.d[1],  //cy
-				op[i].op.sphere.d[2],  //cz
-				op[i].op.sphere.r,
-				step);
-		//apply the current top origin
-		matrix_mult( s->data[ s->top ], tmp );
-		draw_polygons( tmp, t, g );
-		tmp->lastcol = 0;
-		break;
+	add_sphere( tmp,op[i].op.sphere.d[0], //cx
+		    op[i].op.sphere.d[1],  //cy
+		    op[i].op.sphere.d[2],  //cz
+		    op[i].op.sphere.r,
+		    step);
+	//apply the current top origin
+	matrix_mult( s->data[ s->top ], tmp );
+	draw_polygons( tmp, t, g );
+	tmp->lastcol = 0;
+	break;
 
       case TORUS:
-		add_torus( tmp, op[i].op.torus.d[0], //cx
-			   op[i].op.torus.d[1],     //cy
-			   op[i].op.torus.d[2],    //cz
-			   op[i].op.torus.r0,
-			   op[i].op.torus.r1,
-			   step);
-		matrix_mult( s->data[ s->top ], tmp );
-		draw_polygons( tmp, t, g );
-		tmp->lastcol = 0;
-		break;
+	add_torus( tmp, op[i].op.torus.d[0], //cx
+		   op[i].op.torus.d[1],     //cy
+		   op[i].op.torus.d[2],    //cz
+		   op[i].op.torus.r0,
+		   op[i].op.torus.r1,
+		   step);
+	matrix_mult( s->data[ s->top ], tmp );
+	draw_polygons( tmp, t, g );
+	tmp->lastcol = 0;
+	break;
 
       case BOX:
-		add_box( tmp, op[i].op.box.d0[0],
-			 op[i].op.box.d0[1],
-			 op[i].op.box.d0[2],
-			 op[i].op.box.d1[0],
-			 op[i].op.box.d1[1],
-			 op[i].op.box.d1[2]);
-		matrix_mult( s->data[ s->top ], tmp );
-		draw_polygons( tmp, t, g );
-		tmp->lastcol = 0;
-		break;
+	add_box( tmp, op[i].op.box.d0[0],
+		 op[i].op.box.d0[1],
+		 op[i].op.box.d0[2],
+		 op[i].op.box.d1[0],
+		 op[i].op.box.d1[1],
+		 op[i].op.box.d1[2]);
+	matrix_mult( s->data[ s->top ], tmp );
+	draw_polygons( tmp, t, g );
+	tmp->lastcol = 0;
+	break;
 
       case LINE:
-		add_edge( tmp, op[i].op.line.p0[0],
-			  op[i].op.line.p0[1],
-			  op[i].op.line.p0[1],
-			  op[i].op.line.p1[0],
-			  op[i].op.line.p1[1],
-			  op[i].op.line.p1[1]);
-		draw_lines( tmp, t, g );
-		tmp->lastcol = 0;
-		break;
+	add_edge( tmp, op[i].op.line.p0[0],
+		  op[i].op.line.p0[1],
+		  op[i].op.line.p0[1],
+		  op[i].op.line.p1[0],
+		  op[i].op.line.p1[1],
+		  op[i].op.line.p1[1]);
+	draw_lines( tmp, t, g );
+	tmp->lastcol = 0;
+	break;
 
       case MOVE:
-		//get the factors
-		xval = op[i].op.move.d[0];
-		yval =  op[i].op.move.d[1];
-		zval = op[i].op.move.d[2];
+	//get the factors
+	xval = op[i].op.move.d[0];
+	yval =  op[i].op.move.d[1];
+	zval = op[i].op.move.d[2];
 		  
-		transform = make_translate( xval, yval, zval );
-		//multiply by the existing origin
-		matrix_mult( s->data[ s->top ], transform );
-		//put the new matrix on the top
-		copy_matrix( transform, s->data[ s->top ] );
-		free_matrix( transform );
-		break;
+	transform = make_translate( xval, yval, zval );
+	//multiply by the existing origin
+	matrix_mult( s->data[ s->top ], transform );
+	//put the new matrix on the top
+	copy_matrix( transform, s->data[ s->top ] );
+	free_matrix( transform );
+	break;
 
       case SCALE:
-		xval = op[i].op.scale.d[0];
-		yval = op[i].op.scale.d[1];
-		zval = op[i].op.scale.d[2];
+	xval = op[i].op.scale.d[0];
+	yval = op[i].op.scale.d[1];
+	zval = op[i].op.scale.d[2];
 		  
-		transform = make_scale( xval, yval, zval );
-		matrix_mult( s->data[ s->top ], transform );
-		//put the new matrix on the top
-		copy_matrix( transform, s->data[ s->top ] );
-		free_matrix( transform );
-		break;
+	transform = make_scale( xval, yval, zval );
+	matrix_mult( s->data[ s->top ], transform );
+	//put the new matrix on the top
+	copy_matrix( transform, s->data[ s->top ] );
+	free_matrix( transform );
+	break;
 
       case ROTATE:
-		xval = op[i].op.rotate.degrees * ( M_PI / 180 );
+	xval = op[i].op.rotate.degrees * ( M_PI / 180 );
 
-		//get the axis
-		if ( op[i].op.rotate.axis == 0 ) 
-		  transform = make_rotX( xval );
-		else if ( op[i].op.rotate.axis == 1 ) 
-		  transform = make_rotY( xval );
-		else if ( op[i].op.rotate.axis == 2 ) 
-		  transform = make_rotZ( xval );
+	//get the axis
+	if ( op[i].op.rotate.axis == 0 ) 
+	  transform = make_rotX( xval );
+	else if ( op[i].op.rotate.axis == 1 ) 
+	  transform = make_rotY( xval );
+	else if ( op[i].op.rotate.axis == 2 ) 
+	  transform = make_rotZ( xval );
 
-		matrix_mult( s->data[ s->top ], transform );
-		//put the new matrix on the top
-		copy_matrix( transform, s->data[ s->top ] );
-		free_matrix( transform );
-		break;
+	matrix_mult( s->data[ s->top ], transform );
+	//put the new matrix on the top
+	copy_matrix( transform, s->data[ s->top ] );
+	free_matrix( transform );
+	break;
 
       case PUSH:
-		push( s );
-		break;
-		  case POP:
-		pop( s );
-		break;
-		  case SAVE:
-		save_extension( t, op[i].op.save.p->name );
-		break;
-		  case DISPLAY:
-		display( t );
-		break;
-	} //close switch
-	} //close for-loop
+	push( s );
+	break;
+      case POP:
+	pop( s );
+	break;
+      case SAVE:
+	save_extension( t, op[i].op.save.p->name );
+	break;
+      case DISPLAY:
+	display( t );
+	break;
+      } //close switch
+    } //close for-loop
   } //close else
   
   free_stack( s );
   free_matrix( tmp );
-	//free_matrix( transform );
+  //free_matrix( transform );
 }
