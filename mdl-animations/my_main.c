@@ -436,7 +436,7 @@ void my_main( int polygons ) {
 		//save frame
 		sprintf(frame_name, "%s%04d%s", name, j, ".png");
 		printf("Saving frame %s\n", frame_name);
-		save_extension(frame_name);
+		save_extension(t, frame_name);
     }
 
   }
