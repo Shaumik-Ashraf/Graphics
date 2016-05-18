@@ -286,6 +286,8 @@ void my_main( int polygons ) {
   g.green = 255;
   g.blue = 255;
 
+  s = new_stack();
+  
   first_pass();
   printf("first pass complete.\n");
   knobs = second_pass();
