@@ -287,6 +287,7 @@ void my_main( int polygons ) {
   g.blue = 255;
 
   s = new_stack();
+  tmp = new_matrix(4,4);
   
   first_pass();
   printf("first pass complete.\n");
@@ -361,7 +362,7 @@ void my_main( int polygons ) {
 	  xval = op[i].op.move.d[0];
 	  yval =  op[i].op.move.d[1];
 	  zval = op[i].op.move.d[2];
-			  
+
 	  transform = make_translate( xval, yval, zval );
 	  //multiply by the existing origin
 	  matrix_mult( s->data[ s->top ], transform );
@@ -374,9 +375,9 @@ void my_main( int polygons ) {
 	  xval = op[i].op.scale.d[0];
 	  yval = op[i].op.scale.d[1];
 	  zval = op[i].op.scale.d[2];
-			
+
 	  transform = make_scale( xval, yval, zval );
-			
+
 	  //check if its a "variable"
 	  if( op[i].op.scale.p!=NULL ) { //if vary'd search list for name and apply if there
 	    while( vn!=NULL ) {
@@ -559,6 +560,7 @@ void my_main( int polygons ) {
 	display( t );
 	break;
       } //close switch
+
     } //close for-loop
   } //close else
   
