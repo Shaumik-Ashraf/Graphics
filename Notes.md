@@ -644,3 +644,22 @@ Percentages are called knobs because the increase/turn like a doorknob
  - draw a series of horizontal lines within a polygon
  - draw lines from (x_0,y_0) of line AB to (x_1,y_0) of line AC or line CB
  
+##5/18/16
+
+####Z-Buffering
+ - keeping track of z-indexes of shapes and pixels in a seperate matrix so we 
+kno what colors to draw
+ - int z_buffer[][]; //<- something like that
+ - will be a seperate structure, but could be incorporated into struct pixel
+ - when you plot a point; check its z coordinates against its current z-coord
+in the z-buffer
+ - z-buffer should be initialized to smallest possible value
+
+####functions that need to be updated in our mdl:
+ - plot()
+ - draw_line()
+ - draw_lines() (for 2d shapes)
+ - draw_polygons()
+ - scanline() (if implemented)
+
+_we must now calculate z values of points in draw lines func_

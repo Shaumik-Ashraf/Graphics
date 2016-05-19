@@ -1,0 +1,14 @@
+
+Task: extend existing graphics engine
+
+Commands:
+MESH - import external mesh file (point triplets -> triangles)
+TWEEN - given start and end image, move points over time to morph images
+
+Other ideas:
+ - add new shapes
+ - change transformation scaling time from linear to non-linear
+
+ideas:
+ - add direct PNG file writing (sans 'convert')
+ - add direct image rendering (without 'display')

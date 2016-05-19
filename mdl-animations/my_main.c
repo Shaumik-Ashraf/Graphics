@@ -159,7 +159,7 @@ struct vary_node ** second_pass() {
 
   extern int num_frames;
   extern struct vary_node* nav;
-  
+
   int i, j, start, end, x, y;
   struct vary_node** ret;
 
@@ -169,14 +169,14 @@ struct vary_node ** second_pass() {
   for(i=0; i<num_frames; i++) {
     ret[i] = NULL;
   }
-  
+
   for(i=0; i<lastop; i++) {
     if( op[i].opcode == VARY ) {
       start = op[i].op.vary.start_frame;
       end = op[i].op.vary.end_frame;
       x = op[i].op.vary.start_val;
       y = op[i].op.vary.end_val;
-	
+
       for(j=start; j<end; j++) { //iterate thru array (frames)
 	struct vary_node* nav;
 			
@@ -446,7 +446,7 @@ void my_main( int polygons ) {
       } //close for-loop
 	
       //save frame
-      sprintf(frame_name, "%s%04d%s", name, j, ".png");
+      sprintf(frame_name, "anim/%s%04d%s", name, j, ".png");
       printf("Saving frame %s\n", frame_name);
       save_extension(t, frame_name);
     }
