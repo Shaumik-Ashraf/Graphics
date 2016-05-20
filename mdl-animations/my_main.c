@@ -286,6 +286,7 @@ void my_main( int polygons ) {
   g.green = 255;
   g.blue = 255;
 
+  clear_screen(t);
   s = new_stack();
   tmp = new_matrix(4,4);
   
@@ -318,6 +319,7 @@ void my_main( int polygons ) {
 		      step);
 	  //apply the current top origin
 	  matrix_mult( s->data[ s->top ], tmp );
+	  print_matrix(tmp); //debug
 	  draw_polygons( tmp, t, g );
 	  tmp->lastcol = 0;
 	  break;
@@ -453,6 +455,7 @@ void my_main( int polygons ) {
 
   }
   else { //else drawing only picture
+    printf("drawing picture...\n");
     for (i=0;i<lastop;i++) {
 
       switch (op[i].opcode) {
@@ -558,6 +561,7 @@ void my_main( int polygons ) {
 	break;
       case DISPLAY:
 	display( t );
+	save_extension( t, "DEBUG.ppm");  //REMOVE LATER
 	break;
       } //close switch
 
