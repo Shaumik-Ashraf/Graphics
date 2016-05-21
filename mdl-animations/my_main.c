@@ -380,7 +380,7 @@ void my_main( int polygons ) {
 		  zval = op[i].op.scale.d[2];
 		  
 		  if( op[i].op.scale.p != NULL ) { //var motion
-		  	while( vn!-NULL ) {
+		  	while( vn!=NULL ) {
 		  		if( strcmp(op[i].op.scale.p->name, vn->name)==0 ) {
 		  			xval *= (vn->value);
 		  			yval *= (vn->value);
@@ -409,7 +409,7 @@ void my_main( int polygons ) {
 		  yval = op[i].op.rotate.axis;
 	
 		  if( op[i].op.rotate.p!=NULL ) { //var motion
-		  	while( vn!-NULL ) {
+		  	while( vn!=NULL ) {
 		  		if( strcmp(op[i].op.rotate.p->name, vn->name)==0 ) {
 		  			xval *= (vn->value);
 					break;
@@ -426,7 +426,7 @@ void my_main( int polygons ) {
 		  else if ( op[i].op.rotate.axis == 2 ) 
 		    transform = make_rotZ( xval );
 
-		  vn = knobs[j];	
+		  vn = knobs[j];
 		  free_matrix( transform );
 		  break;
 	
