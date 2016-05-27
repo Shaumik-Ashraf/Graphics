@@ -663,3 +663,69 @@ in the z-buffer
  - scanline() (if implemented)
 
 _we must now calculate z values of points in draw lines func_
+
+##5/23/16 - 5/27/16
+
+####Modeling Real World Lighting
+ - 2 parts to each color
+ - reflective properties of the object
+ - color & intensity of the light
+
+####Lighting Equation
+ - Goal is to calculate a color value [0-255] for each polygon (or color)
+ - To generate grayscale images, you need to compute the color once per polygon
+ - To generate a color image, you need to compute seperate rbg values for each polygon
+
+I = I_ambient + I_diffuse + I_specular, where I is illumination
+
+ - Ambient Light: Background light, hits all surfaces equally
+ - Point Light sources: vector, light from specific point & direction
+   * Diffuse Light, Specular Light
+ - Diffuse Light comes from a specific point and is reflected equally (diffuse reflection)
+ - Specular Light comes from a specific point but reflected in a specific angle
+
+Quality of Light
+ - Ambient Light
+   * Represent by a color value, int rgb triple
+ - Point Light Source
+   * Represented by a color and a light location
+
+Reflective Properties
+ - An object reflects x% of light specularly and (100-x)% of light diffusely
+ - Referred to in mdl as constants
+
+Constants
+ - K_a constant of ambience
+ - K_d constant of diffuse
+ - K_s constant of specular
+ - ideally: K_a + K_d + K_s = 1
+
+Ambient Light
+ - C_a ambient color
+ - K_a constant of ambient reflection
+
+I_ambient = (C_a)(K_a)
+
+Diffuse Light
+ - reflection on irregular surface
+ - C_p color of point of light source
+ - K_d constant of diffuse reflection
+ - L is light source vector (actual reflection)
+ - N is normal vector of surface
+
+I_diffuse = (C_p)(K_d)(L*N) (where * is dot product)
+
+Specular Light
+ - C_p color of point of light source
+ - K_s constant of specular reflection
+ - N normal vector of surface, nN is normal of N
+ - V view vector, nV is normal of V
+ - L light vector, nL is normal of L
+ - R is reflection vector
+ - P is projection of L on N
+ - refer to SpecularReflectionDia.xcf
+
+I_specular = (C_p)(K_s)cos(alpha) = (C_p)(K_s)((2(nL*nN)nN-nL)*nV)
+
+_raise cos(alpha) to the nth power to make sharper specular image, try out values of n until you get what you want_
+
