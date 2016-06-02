@@ -729,3 +729,17 @@ I_specular = (C_p)(K_s)cos(alpha) = (C_p)(K_s)((2(nL*nN)nN-nL)*nV)
 
 _raise cos(alpha) to the nth power to make sharper specular image, try out values of n until you get what you want_
 
+##5/31/16
+
+####Shading Models
+
+######Flat shading
+ - Calculate color (I, illumination) for each polygon
+
+######Gouraud Shading
+ - Calculate color (I, illumination) once per vertex normal (normalized sum of all the surface normals that share a vertex)
+ - Interpolate the color in scanline conversion and draw_line
+
+######Phong Shading
+ - Calculate vertex normals
+ - Interpolate the normal and scanline conversion and drawline

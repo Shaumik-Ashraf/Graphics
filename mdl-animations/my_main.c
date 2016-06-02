@@ -297,6 +297,18 @@ void my_main( int polygons ) {
 
   print_knobs();
 
+  //print my knobs =============
+  for( i=0; i<num_frames; i++ ) {
+    vn = knobs[j];
+    printf("%i:[", i);
+    while(vn!=NULL) {
+      printf("%s-", vn->name);
+      vn = vn->next;
+    }
+    printf("]\n");
+  }
+  //===========================
+  
   if( num_frames!=1 ) { //if animation
     printf("Processing animation...\n");
 	
