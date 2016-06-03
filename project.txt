@@ -11,4 +11,15 @@ Other ideas:
 
 ideas:
  - add direct PNG file writing (sans 'convert')
- - add direct image rendering (without 'display')
+ - add direct APNG animation creation (without imagick)
+ 
+to implement:
+ - scanline conversion
+ - z buffering
+ - lighting & shading (Phong's lighting model, Flat or Gourand or Phong shading model)
+
+plan:
+ - implement scanline conversion, zbuffering, lighting, and shading
+ - create direct PNG writing
+ - create direct APNG writing
+ - add more mdl commands
