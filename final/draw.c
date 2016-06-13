@@ -555,7 +555,7 @@ Returns:
 Go through points 2 at a time and call draw_line to add that line
 to the screen
 ====================*/
-void draw_lines( struct matrix * points, screen s, color c) {
+void draw_lines( struct matrix * points, screen s, color c, zbuffer zbuf) {
 
   int i;
  
@@ -568,7 +568,7 @@ void draw_lines( struct matrix * points, screen s, color c) {
   for ( i = 0; i < points->lastcol - 1; i+=2 ) {
 
     draw_line( points->m[0][i], points->m[1][i], 
-	       points->m[0][i+1], points->m[1][i+1], s, c);
+	       points->m[0][i+1], points->m[1][i+1], s, c, zbuf);
     //FOR DEMONSTRATION PURPOSES ONLY
     //draw extra pixels so points can actually be seen    
     /*
@@ -593,10 +593,14 @@ void draw_lines( struct matrix * points, screen s, color c) {
 }
 
 
-void draw_line(int x0, int y0, int x1, int y1, screen s, color c) {
+void draw_line(int x0, int y0,
+	       int x1, int y1,
+	       double z0, double z1,
+	       screen s, color c, zbuffer zbuf) {
  
   int x, y, d, dx, dy;
-
+  double z, dz; //compute relative to x
+  
   x = x0;
   y = y0;
   
@@ -620,7 +624,7 @@ void draw_line(int x0, int y0, int x1, int y1, screen s, color c) {
       d = dy - ( dx / 2 );
   
       while ( x <= x1 ) {
-	plot(s, c, x, y);
+	plot(s, c, x, y, z, zbuf); //!!!!
 
 	if ( d < 0 ) {
 	  x = x + 1;
@@ -639,7 +643,7 @@ void draw_line(int x0, int y0, int x1, int y1, screen s, color c) {
       d = ( dy / 2 ) - dx;
       while ( y <= y1 ) {
 
-	plot(s, c, x, y );
+	plot(s, c, x, y, z, zbuf );
 	if ( d > 0 ) {
 	  y = y + 1;
 	  d = d - dx;
@@ -663,7 +667,7 @@ void draw_line(int x0, int y0, int x1, int y1, screen s, color c) {
   
       while ( x <= x1 ) {
 
-	plot(s, c, x, y);
+	plot(s, c, x, y, z, zbuf);  //!!!!!
 
 	if ( d > 0 ) {
 	  x = x + 1;
@@ -684,7 +688,7 @@ void draw_line(int x0, int y0, int x1, int y1, screen s, color c) {
 
       while ( y >= y1 ) {
 	
-	plot(s, c, x, y );
+	plot(s, c, x, y, z, zbuf );  //!!!!!
 	if ( d < 0 ) {
 	  y = y - 1;
 	  d = d + dx;
