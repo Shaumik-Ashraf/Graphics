@@ -16,7 +16,9 @@ void h_scanline_conversion( screen s, zbuffer zbuf, color c,
     double btm_x, btm_y, btm_z;
     double mid_x, mid_y, mid_z;
     double top_x, top_y, top_z;
-
+	int dx, dy, x, y;
+	int i, j;
+	
     //identify bottom, middle, and top points
     if( y0 < y1 && y0 < y2 ) {
 	//point0 is on bottom
@@ -122,6 +124,19 @@ void h_scanline_conversion( screen s, zbuffer zbuf, color c,
 	}
     }
 
+	//find line from btm to middle
+	dy = (int)(top_y-btm_y);
+	dx = (int)(top_x-btm_x);
+	x = (int)btm_x;
+	y = (int)btm_y;
+	
+		for(i=x; i<
+	while( y<mid_y ) {
+		x+=dx
+		y+=dy;
+	}
+	
+	
 }
 
 void v_scanline_conversion( screen s, zbuffer zbuf, color c,
