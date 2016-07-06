@@ -1,0 +1,7 @@
+//myscript
+push
+move 250 250 0
+push
+sphere 0 0 0 150
+save mys.png
+quit
