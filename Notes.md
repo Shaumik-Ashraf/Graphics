@@ -1,4 +1,4 @@
-#Notes
+# Notes
 ## 2/3/16
 ##### Image File Formats
 
@@ -33,7 +33,7 @@ Raster vs Vector
  - Vector format ex: svg
 
 ## 2/4/16
-####NetPBM
+#### NetPBM
  - a family of image file formats
  - extension: .ppm
  - losseless raster format
@@ -58,13 +58,13 @@ Commands:
 
 DO NOT ADD PPM TO GITHUB
 
-##2/5/16 - 2/9/16
-####Github
+## 2/5/16 - 2/9/16
+#### Github
  - Use .gitignore
  - Use submodules (aliases for repos)
 
-####Line Algorithm
-######Bresenham's Line Algorithm
+#### Line Algorithm
+###### Bresenham's Line Algorithm
 y=mx+b
 
 y=(dy/dx)x+b (d=delta)
@@ -156,8 +156,8 @@ while( x<x1 ) {
 
 }
 
-##2/10/16
-####Line Algorithm (Octant I)
+## 2/10/16
+#### Line Algorithm (Octant I)
 
 to draw line from (x0,y0) to (x1,y1)
 
@@ -181,7 +181,7 @@ while(x<=x1) {
 
 }
 
-####Octant II
+#### Octant II
 1 < slope of line
 
 for point (x,y) next possible point (x,y+1) or (x+1,y+1)
@@ -190,7 +190,7 @@ next possible points' midpoint changes, changing d
 
 other stuff changes too
 
-####Line Algorithm (Octant II)
+#### Line Algorithm (Octant II)
 
 to draw line from (x0,y0) to (x1,y1)
 
@@ -214,15 +214,15 @@ while(x<=x1) {
 
 }
 
-##2/22/16
-####Using Matrices
+## 2/22/16
+#### Using Matrices
 
-######Point Matrix
+###### Point Matrix
  - [P_0 P_1 P_2 P_3 P_4 ...]
  - Draw line between each adjacent point
  - FAILS
-
-######Shape Matrix
+ 
+###### Shape Matrix
  - [[P_0 P_1 P_2] [P_3 P_4 P_5]]
  - Draws closed shapes only
  - 3D array
@@ -231,12 +231,12 @@ while(x<=x1) {
  - [P_0 P_1 P_2 P_0 NUL P_3 P_4 P_5 P_3 NUL]
  - 
 
-######Edge Matrix
+###### Edge Matrix
  - [P_0 P_1 P_1 P_2 P_2 P_3 ...]
  - More Space Extensive
  - Draw every pair of points
 
-#######Connection Matrix
+###### Connection Matrix
  - Array of Points
  - Boolean matrix where element (i,j) is true of Points i and j have a line
 
@@ -244,12 +244,12 @@ NOTE: Points are Arrays themselves
 
 Points Will be: [X, Y, Z, 1]
 
-##Matrix Math
+## Matrix Math
  - Scalar Multiplication
  - Matrix Multiplication
  - Matrix Multiplication Identity
 
-####Scalar Multiplication
+#### Scalar Multiplication
 ```
 foo(scalar s, matrix M) {
 	for(i=0; i<rows; i++) {
@@ -260,26 +260,26 @@ foo(scalar s, matrix M) {
 }
 ```
 
-####Matrix Multiplication
+#### Matrix Multiplication
  - non commutative
  - number of cols in first matrix must equal number of rows of second matrix
 ```
 
 ```
 
-####Matrix Multiplication Identity
-######Identity Matrix
+#### Matrix Multiplication Identity
+###### Identity Matrix
  - All diagonal values are 1; all other values are 0
  - Square Matrix
  - Any matrix times an identity matrix is the former matrix
 
-####Graphics Matrics
+#### Graphics Matrics
 
 A set of points is always a 4xN matrix, where N is number of points
 
-##2/24/16 - 2/25/16
+## 2/24/16 - 2/25/16
 
-#####Scaling
+##### Scaling
 (x,y,z) ---Scale(a,b,c)---> (ax,by,cz)
 
 [a000][x]    [ax]
@@ -292,7 +292,7 @@ A set of points is always a 4xN matrix, where N is number of points
 
 Note: dilates _from center_
 
-####Translation
+#### Translation
 
 (x,y,z)---Translate(a,b,c)-->(x+a,b+y,c+z)
 
@@ -301,7 +301,7 @@ Note: dilates _from center_
 [001c][z] --[c+z]
 [0001][1]   [ 1 ]
 
-####Rotation
+#### Rotation
 
 (x,y,z)---Rotate(a,b,c,o)-->
 
@@ -311,7 +311,7 @@ A 2d rotation of point (x,y) by o degrees is xcos(o)-ysin(o),xsin(o)+ycos(o);
 
 For 3d rotation about x, y, _or_ z-axis, use 2d rotation on plane yz, xz, xy
 
-####Applying (affine) transformations
+#### Applying (affine) transformations
 let E_0 be an Edge matrix
 
 let S be Scale matrix
@@ -331,9 +331,9 @@ A Rotation : R*E2 = E3 translated & scaled & rotated
 E3 = R*S*T*E0 = (R*S*T)*E0 _Matrix multiplication is associative_
 
 
-##3/3/2016
+## 3/3/2016
 
-####Parametric Equations
+#### Parametric Equations
  - Non-parameterized equation: y=f(x); if x changes, y changes, and vice-versa
  - Parametric Equation: x=f(t), y=g(t); x and y are no longer related; t is a parameter off of which x and y are based
  - In graphics, we generate a bunch of xs and ys by taking t from 0 to 1 (t:0->1) (t=[0,1])
@@ -342,9 +342,9 @@ Create a param_x and param_y function, then use a for-loop to get and add (x,y) 
 
 Can make param functions piece wise and make a bunch of shapes.
  
-##3/8/16 - 3/10/16
+## 3/8/16 - 3/10/16
 
-####Hermit Curves & Splines
+#### Hermit Curves & Splines
 
 [+2 -2 +1 +1][P_0x]   [ax]
 [-3 +3 -2 +1][P_1x] = [bx]
@@ -355,7 +355,7 @@ Can make param functions piece wise and make a bunch of shapes.
 Multiply givens by Inverse H matrix to obtain coefficients
 
 
-####Bezier Curves
+#### Bezier Curves
 
 Linear (Given: P_0, P_1)
  * P(t) = (1-t)P_0 + tP_1
@@ -387,10 +387,10 @@ d = P_0
 
 Multiply input points by this matrix to get coeficients (Bezier)
 
-##3/21/16 - 3/  /16
-####3D Shapes
+## 3/21/16 - 3/  /16
+#### 3D Shapes
 
-######Spheres
+###### Spheres
  - Draw circle
  - Rotate circle
 ```
@@ -403,14 +403,14 @@ for(p=0; p<1; p+=step) {
 }
 ```
 
-####Stuff
+#### Stuff
 Find a nice curve and rotate it :smiley:
 
 Do translations and rotations on a bunch of plotted points of a 3D figure to check it out
 
-##3/29/16
+## 3/29/16
 
-####Wireframe/Polygon Meshes
+#### Wireframe/Polygon Meshes
 
 Wireframe
  - Lines connecting points
@@ -425,7 +425,7 @@ Polygon
  - allows to make solid objects
  - allows us to remove "back faces" of objects; you can only see half a sphere
 
-####Polygon Matrices
+#### Polygon Matrices
 
 For a top-view box (square):
 
@@ -442,7 +442,7 @@ Edge Matrix = [P0,P1;P1,P2;P2,P3;...]
 Triangle Polygon Matrix = [P0,P1,P2;P2,P3,P0;...]
 
 
-####Edge Matrix vs Polygon Matrix
+#### Edge Matrix vs Polygon Matrix
  - plot function ----------> plot function (stays)
  - draw line (line algo) --> draw line (stays)
  - draw lines -------------> draw polygons (still requires draw lines)
@@ -450,9 +450,9 @@ Triangle Polygon Matrix = [P0,P1,P2;P2,P3,P0;...]
  - add edge ---------------> add polygon (call add point thrice) (points must be added in counter clock wise order)
 
 
-##3/30/16
+## 3/30/16
 
-####Polygon Meshes
+#### Polygon Meshes
 Box
  - front: [P0, P1, P2] [P2, P3, P0] ==> two triangles for front of box
  - points must be in counter-clockwise order
@@ -471,9 +471,9 @@ Sphere (case 2)
  - rotate semicircle
  - draw edge from point i to i+n
 
-##4/6/16
+## 4/6/16
 
-####Backface Calling
+#### Backface Calling
  - process of rendering only the surfaces which are faceing forward
  - making shapes more realistic
  - drawing only the polygons we need
@@ -481,7 +481,7 @@ Sphere (case 2)
  - the view vector (aka camera) (_V_) shows the direction of the observer
  - If the angle between the view vector and the surface normal is between 90 degrees and 270 degrees, the surface is drawn
 
-######Algorithm
+###### Algorithm
  - Calculate _N_ (_V_ is set by user)
  - Find angle between _N_ and _V_ (let this be theta)
  - if 90 < theta < 270 draw it
@@ -496,7 +496,7 @@ cos(theta) (if between 90 and 270) is negative; magnitude is always positive;
 _If dot(N, V) < 0 then surface is drawn_
 
 
-##4/12/16
+## 4/12/16
 
 Make new language construct for graphics interpretor that is able to
  create variables, do variable assignement, and run loops
@@ -505,12 +505,12 @@ Some objects need to be transformed independent of each other, while some
  objects need to be transformed dependent of another; this requires a
  relative coordinate system
 
-####Relative Coordinate System
+#### Relative Coordinate System
  - Currently nous avons a global coordinate system (each object is drawn with repsect for/to the same origin/coordinate system
  - In a relative coordinate system each object can have its own origin/coordinate system
  - uses stack to store various coordinate systems
 
-####Graphics Framework
+#### Graphics Framework
  - All transformations will be applied to top of stack (current coord. sys.)
  - The stack will be pushed and popped as needed
  - Drawing pipeline:
@@ -535,9 +535,9 @@ _You do NOT push objects onto a stack, only coordinate systems_
 
 _Push to have an independent object but relative to previous_
 
-##4/19/16
+## 4/19/16
 
-####Compilers
+#### Compilers
 
 Source Code -> Preprocessor/Linker -> Compiler -> Machine Code
 
@@ -582,7 +582,7 @@ Code Generator
  - create machine code
  - da 1s and 0s
 
-##4/21/16
+## 4/21/16
 
 Compiler tools
  - lex (the lexer, requires a token definition)
@@ -591,8 +591,8 @@ Compiler tools
  - bison (free opensouce yacc)
  -
 
-##5/3/16 - 
-####Animation
+## 5/3/16 - 
+#### Animation
 
 lets say we have an image of a ball, and we want to preform the following
 animation:
@@ -613,23 +613,23 @@ Percentages are called knobs because the increase/turn like a doorknob
 
 "Everyone else's goes to 10, ours goes to 11"
 
-####New mdl commands
+#### New mdl commands
  - frames(n) -> set the number of frames in an animation
  - basename(s) -> set the prefix for all frame filenames
  - vary(knob, starting_frame, ending_frame, start_value, end_value) -> describe how knob changes over time
 
-######Pass I
+###### Pass I
  - Look for and verify the animation commands: frames, basename, vary
  - If there are errors, display messafe, and exit
  - Set the number of frames
  - Set the basename (if not found, set default and alert user)
 
-######Pass II
+###### Pass II
  - Generate and show the knob values
  - create an array/list where each index represents a frame and stores a list of knob values for that frame
  - array of lists, where each list node contains a vary command and each index of the array represents a frame
 
-######Pass III
+###### Pass III
  - Drawing phase
  - If no animation code, draw the image normally
  - If there is animation code, for each frame:
@@ -637,16 +637,16 @@ Percentages are called knobs because the increase/turn like a doorknob
    * Go through the drawing commands and apply knobs as needed
    * save the image as basename + frame#
 
-##5/12/16 - 5/13/16
+## 5/12/16 - 5/13/16
 
-####Scanline conversion
+#### Scanline conversion
  - "fill in shape" algorithm (generating solids, as opposed to mesh)
  - draw a series of horizontal lines within a polygon
  - draw lines from (x_0,y_0) of line AB to (x_1,y_0) of line AC or line CB
  
-##5/18/16
+## 5/18/16
 
-####Z-Buffering
+#### Z-Buffering
  - keeping track of z-indexes of shapes and pixels in a seperate matrix so we 
 kno what colors to draw
  - int z_buffer[][]; //<- something like that
@@ -655,7 +655,7 @@ kno what colors to draw
 in the z-buffer
  - z-buffer should be initialized to smallest possible value
 
-####functions that need to be updated in our mdl:
+#### functions that need to be updated in our mdl:
  - plot()
  - draw_line()
  - draw_lines() (for 2d shapes)
@@ -664,14 +664,14 @@ in the z-buffer
 
 _we must now calculate z values of points in draw lines func_
 
-##5/23/16 - 5/27/16
+## 5/23/16 - 5/27/16
 
-####Modeling Real World Lighting
+#### Modeling Real World Lighting
  - 2 parts to each color
  - reflective properties of the object
  - color & intensity of the light
 
-####Lighting Equation
+#### Lighting Equation
  - Goal is to calculate a color value [0-255] for each polygon (or color)
  - To generate grayscale images, you need to compute the color once per polygon
  - To generate a color image, you need to compute seperate rbg values for each polygon
